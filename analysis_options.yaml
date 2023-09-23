@@ -1,0 +1,24 @@
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    prefer_const_constructors: true
+    prefer_final_fields: false
+    use_key_in_widget_constructors: true
+    prefer_const_literals_to_create_immutables: false
+    prefer_const_constructors_in_immutables: true
+    avoid_print: true
+    avoid_double_and_int_checks: true
+    avoid_returning_this: true
+    use_late_for_private_fields_and_variables: true
+    always_declare_return_types: true
+    always_specify_types: false
+    annotate_overrides: true
+    avoid_catches_without_on_clauses: true
+    avoid_catching_errors: true
+    avoid_null_checks_in_equality_operators: true
+    avoid_positional_boolean_parameters: true
+    cancel_subscriptions: true
+    flutter_style_todos: true
+    unreachable_from_main: true
+    use_enums: true

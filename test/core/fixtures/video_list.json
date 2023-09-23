@@ -1,0 +1,93 @@
+{
+  "total": 89,
+  "data": [
+    {
+      "id": 1,
+      "uuid": "d8f660ba-152f-43e4-87da-cae69eee1790",
+      "shortUUID": "sMUqbgQWqGozGw8g2t1Ke3",
+      "url": "https://video.app/videos/watch/d8f660ba-152f-43e4-87da-cae69eee1790",
+      "name": "My Test Video",
+      "category": {
+        "id": 1,
+        "label": "Test"
+      },
+      "licence": {
+        "id": "en",
+        "label": "Test"
+      },
+      "language": {
+        "id": "en",
+        "label": "Test"
+      },
+      "privacy": {
+        "id": 1,
+        "label": "Test"
+      },
+      "nsfw": false,
+      "truncatedDescription": "Video description...",
+      "description": "Video description...",
+      "isLocal": true,
+      "duration": 1,
+      "views": 1,
+      "viewers": 1,
+      "likes": 1,
+      "dislikes": 1,
+      "thumbnailPath": "/static/thumbnails/3d3cc270-af78-4ae8-9de2-5002d34a79e8.jpg",
+      "previewPath": "/lazy-static/previews/833974db-6b62-4754-959b-f3efbe96d666.jpg",
+      "embedPath": "/videos/embed/d8f660ba-152f-43e4-87da-cae69eee1790",
+      "createdAt": "2023-08-21T23:15:32.920Z",
+      "updatedAt": "2023-08-23T01:56:55.728Z",
+      "publishedAt": "2023-08-21T23:16:54.240Z",
+      "originallyPublishedAt": "2023-08-21T00:00:00.000Z",
+      "isLive": false,
+      "account": {
+        "id": 1,
+        "displayName": "Tester",
+        "name": "tester",
+        "url": "https://video.app/accounts/tester",
+        "host": "video.app",
+        "avatars": [
+          {
+            "width": 48,
+            "path": "/lazy-static/avatars/d8d02204-4300-4980-a72e-526ea1994b1a.jpg",
+            "createdAt": "2023-08-22T03:41:08.048Z",
+            "updatedAt": "2023-08-22T03:41:08.048Z"
+          }
+        ],
+        "avatar": {
+          "width": 48,
+          "path": "/lazy-static/avatars/d8d02204-4300-4980-a72e-526ea1994b1a.jpg",
+          "createdAt": "2023-08-22T03:41:08.048Z",
+          "updatedAt": "2023-08-22T03:41:08.048Z"
+        }
+      },
+      "channel": {
+        "id": 1,
+        "name": "channel_name",
+        "displayName": "Channel Name",
+        "url": "https://video.app/video-channels/channel_name",
+        "host": "video.app",
+        "avatars": [
+          {
+            "width": 48,
+            "path": "/lazy-static/avatars/d8d02204-4300-4980-a72e-526ea1994b1a.jpg",
+            "createdAt": "2023-08-22T03:41:08.048Z",
+            "updatedAt": "2023-08-22T03:41:08.048Z"
+          },
+          {
+            "width": 48,
+            "path": "/lazy-static/avatars/d8d02204-4300-4980-a72e-526ea1994b1a.jpg",
+            "createdAt": "2023-08-22T03:41:08.048Z",
+            "updatedAt": "2023-08-22T03:41:08.048Z"
+          }
+        ],
+        "avatar": {
+          "width": 48,
+          "path": "/lazy-static/avatars/d8d02204-4300-4980-a72e-526ea1994b1a.jpg",
+          "createdAt": "2023-08-22T03:41:08.048Z",
+          "updatedAt": "2023-08-22T03:41:08.048Z"
+        }
+      }
+    }
+  ]
+}
