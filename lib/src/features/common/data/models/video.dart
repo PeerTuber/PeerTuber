@@ -7,7 +7,6 @@ import 'dart:convert';
 
 import 'package:flutter_peertuber/src/features/common/data/models/models.dart';
 import 'package:flutter_peertuber/src/features/common/domain/entities/video.dart';
-import 'package:flutter_peertuber/services/video_service.dart';
 
 VideoModel videoFromJson(String str) => VideoModel.fromJson(json.decode(str));
 
@@ -169,11 +168,6 @@ class VideoModel extends VideoEntity {
             ? null
             : List<String>.from(json["trackerUrls"].map((x) => x)),
       );
-
-  void triggerView(String host, Duration position) {
-    final service = VideoService();
-    service.postVideoView(host, this, position);
-  }
 
   @override
   List<Object?> get props => [

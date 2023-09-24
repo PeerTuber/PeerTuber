@@ -38,6 +38,62 @@ class UserModel extends UserEntity {
       required super.videoQuotaDaily,
       required super.p2PEnabled});
 
+  factory UserModel.fromEntity(UserEntity user) {
+    return UserModel(
+      account: user.account,
+      autoPlayNextVideo: user.autoPlayNextVideo,
+      autoPlayNextVideoPlaylist: user.autoPlayNextVideoPlaylist,
+      autoPlayVideo: user.autoPlayVideo,
+      blocked: user.blocked,
+      blockedReason: user.blockedReason,
+      createdAt: user.createdAt,
+      email: user.email,
+      emailVerified: user.emailVerified,
+      id: user.id,
+      pluginAuth: user.pluginAuth,
+      lastLoginDate: user.lastLoginDate,
+      noInstanceConfigWarningModal: user.noInstanceConfigWarningModal,
+      noAccountSetupWarningModal: user.noAccountSetupWarningModal,
+      noWelcomeModal: user.noWelcomeModal,
+      nsfwPolicy: user.nsfwPolicy,
+      role: user.role,
+      theme: user.theme,
+      username: user.username,
+      videoChannels: user.videoChannels,
+      videoQuota: user.videoQuota,
+      videoQuotaDaily: user.videoQuotaDaily,
+      p2PEnabled: user.p2PEnabled,
+    );
+  }
+
+  UserEntity toEntity() {
+    return UserEntity(
+      account: account,
+      autoPlayNextVideo: autoPlayNextVideo,
+      autoPlayNextVideoPlaylist: autoPlayNextVideoPlaylist,
+      autoPlayVideo: autoPlayVideo,
+      blocked: blocked,
+      blockedReason: blockedReason,
+      createdAt: createdAt,
+      email: email,
+      emailVerified: emailVerified,
+      id: id,
+      pluginAuth: pluginAuth,
+      lastLoginDate: lastLoginDate,
+      noInstanceConfigWarningModal: noInstanceConfigWarningModal,
+      noAccountSetupWarningModal: noAccountSetupWarningModal,
+      noWelcomeModal: noWelcomeModal,
+      nsfwPolicy: nsfwPolicy,
+      role: role,
+      theme: theme,
+      username: username,
+      videoChannels: videoChannels,
+      videoQuota: videoQuota,
+      videoQuotaDaily: videoQuotaDaily,
+      p2PEnabled: p2PEnabled,
+    );
+  }
+
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         account: AccountModel.fromJson(json["account"]),
         autoPlayNextVideo: json["autoPlayNextVideo"],
@@ -46,7 +102,7 @@ class UserModel extends UserEntity {
         blocked: json["blocked"],
         blockedReason: json["blockedReason"],
         createdAt: json["createdAt"],
-        email: json["email"],
+        email: Email.dirty(json["email"]),
         emailVerified: json["emailVerified"],
         id: json["id"],
         pluginAuth: json["pluginAuth"],
@@ -57,7 +113,7 @@ class UserModel extends UserEntity {
         nsfwPolicy: json["nsfwPolicy"],
         role: RoleModel.fromJson(json["role"]),
         theme: json["theme"],
-        username: json["username"],
+        username: Username.dirty(json["username"]),
         videoChannels: List<ChannelModel>.from(
             json["videoChannels"].map((x) => ChannelModel.fromJson(x))),
         videoQuota: json["videoQuota"],
