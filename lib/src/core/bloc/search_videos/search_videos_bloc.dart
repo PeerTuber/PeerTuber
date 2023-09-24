@@ -1,5 +1,5 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_peertuber/src/features/common/domain/usecases/search_videos.dart';
 import 'package:flutter_peertuber/src/features/common/domain/usecases/usecase.dart';
 import 'package:flutter_peertuber/src/features/common/domain/entities/search_data.dart';

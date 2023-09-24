@@ -26,6 +26,14 @@ class CustomTheme {
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         selectedItemColor: Colors.white,
       ),
+      inputDecorationTheme: const InputDecorationTheme(
+        labelStyle: TextStyle(
+          color: Colors.grey,
+        ),
+        floatingLabelStyle: TextStyle(
+          color: Colors.grey,
+        ),
+      ),
       useMaterial3: true,
     );
   }

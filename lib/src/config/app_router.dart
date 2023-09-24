@@ -3,22 +3,34 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_peertuber/injection.dart';
 import 'package:flutter_peertuber/src/core/bloc/instance/instance_cubit.dart';
 import 'package:flutter_peertuber/src/core/bloc/media_player/media_player_bloc.dart';
+import 'package:flutter_peertuber/src/features/auth/presentation/screens/login_screen.dart';
+import 'package:flutter_peertuber/src/features/auth/presentation/screens/signup_screen.dart';
 import 'package:flutter_peertuber/src/features/home/presentation/screens/home.dart';
 import 'package:flutter_peertuber/src/features/navigation/presentation/screens/navigation.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRouter {
-  // TODO: Add the auth bloc as an input
+  // TODO(mikehuntington): Add the auth bloc as an input
   AppRouter();
 
   late final GoRouter router = GoRouter(
-    initialLocation: '/home',
+    initialLocation: '/login',
     routes: <RouteBase>[
       GoRoute(
-        path: '/',
+        name: 'login',
+        path: '/login',
         builder: (BuildContext context, GoRouterState state) {
-          return Container();
+          return const LoginScreen();
         },
+        routes: <RouteBase>[
+          GoRoute(
+            name: 'signup',
+            path: 'signup',
+            builder: (context, state) {
+              return const SignupScreen();
+            },
+          ),
+        ],
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {

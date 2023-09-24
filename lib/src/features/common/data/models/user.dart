@@ -5,7 +5,8 @@
 
 import 'dart:convert';
 
-import 'package:flutter_peertuber/src/features/common/domain/entities/user.dart';
+import 'package:flutter_peertuber/src/features/common/data/models/models.dart';
+import 'package:flutter_peertuber/src/features/common/domain/entities/entities.dart';
 
 UserModel userFromJson(String str) => UserModel.fromJson(json.decode(str));
 
@@ -57,8 +58,8 @@ class UserModel extends UserEntity {
         role: RoleModel.fromJson(json["role"]),
         theme: json["theme"],
         username: json["username"],
-        videoChannels: List<VideoChannelModel>.from(
-            json["videoChannels"].map((x) => VideoChannelModel.fromJson(x))),
+        videoChannels: List<ChannelModel>.from(
+            json["videoChannels"].map((x) => ChannelModel.fromJson(x))),
         videoQuota: json["videoQuota"],
         videoQuotaDaily: json["videoQuotaDaily"],
         p2PEnabled: json["p2pEnabled"],
@@ -91,77 +92,6 @@ class UserModel extends UserEntity {
       };
 }
 
-class AccountModel extends AccountEntity {
-  const AccountModel(
-      {required super.url,
-      required super.name,
-      required super.host,
-      required super.avatars,
-      required super.avatar,
-      required super.id,
-      required super.hostRedundancyAllowed,
-      required super.followingCount,
-      required super.followersCount,
-      required super.createdAt,
-      required super.banners,
-      required super.displayName,
-      required super.description,
-      required super.updatedAt,
-      super.userId});
-
-  factory AccountModel.fromJson(Map<String, dynamic> json) => AccountModel(
-        url: json["url"],
-        name: json["name"],
-        host: json["host"],
-        avatars: List<AvatarModel>.from(
-            json["avatars"].map((x) => AvatarModel.fromJson(x))),
-        avatar: json["avatar"] != null
-            ? AvatarModel.fromJson(json["avatar"])
-            : null,
-        id: json["id"],
-        hostRedundancyAllowed: json["hostRedundancyAllowed"] ?? false,
-        followingCount: json["followingCount"] ?? 0,
-        followersCount: json["followersCount"] ?? 0,
-        createdAt: json["createdAt"] == null
-            ? null
-            : DateTime.parse(json["createdAt"]),
-        banners: json["banners"] == null
-            ? null
-            : List<dynamic>.from(json["banners"].map((x) => x)),
-        displayName: json["displayName"],
-        description: json["description"] ?? '',
-        updatedAt: json["updatedAt"] == null
-            ? null
-            : DateTime.parse(json["updatedAt"]),
-        userId: json["userId"],
-      );
-}
-
-class AvatarModel extends AvatarEntity {
-  const AvatarModel(
-      {super.width,
-      required super.path,
-      super.url,
-      required super.createdAt,
-      required super.updatedAt});
-
-  factory AvatarModel.fromJson(Map<String, dynamic> json) => AvatarModel(
-        width: json["width"],
-        path: json["path"],
-        url: json["url"],
-        createdAt: DateTime.parse(json["createdAt"]),
-        updatedAt: DateTime.parse(json["updatedAt"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "width": width,
-        "path": path,
-        "url": url,
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
-      };
-}
-
 class RoleModel extends RoleEntity {
   const RoleModel({required super.id, required super.label});
 
@@ -173,64 +103,6 @@ class RoleModel extends RoleEntity {
   Map<String, dynamic> toJson() => {
         "id": id,
         "label": label,
-      };
-}
-
-class VideoChannelModel extends VideoChannelEntity {
-  const VideoChannelModel(
-      {required super.id,
-      required super.url,
-      required super.name,
-      required super.host,
-      required super.hostRedundancyAllowed,
-      required super.followingCount,
-      required super.followersCount,
-      required super.createdAt,
-      required super.updatedAt,
-      required super.displayName,
-      required super.description,
-      required super.support,
-      required super.isLocal,
-      required super.banners,
-      required super.ownerAccount});
-
-  factory VideoChannelModel.fromJson(Map<String, dynamic> json) =>
-      VideoChannelModel(
-        id: json["id"],
-        url: json["url"],
-        name: json["name"],
-        host: json["host"],
-        hostRedundancyAllowed: json["hostRedundancyAllowed"],
-        followingCount: json["followingCount"],
-        followersCount: json["followersCount"],
-        createdAt: DateTime.parse(json["createdAt"]),
-        updatedAt: DateTime.parse(json["updatedAt"]),
-        displayName: json["displayName"],
-        description: json["description"],
-        support: json["support"],
-        isLocal: json["isLocal"],
-        banners: List<BannerModel>.from(
-            json["banners"].map((x) => BannerModel.fromJson(x))),
-        ownerAccount: OwnerAccountModel.fromJson(json["ownerAccount"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "url": url,
-        "name": name,
-        "host": host,
-        "hostRedundancyAllowed": hostRedundancyAllowed,
-        "followingCount": followingCount,
-        "followersCount": followersCount,
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
-        "displayName": displayName,
-        "description": description,
-        "support": support,
-        "isLocal": isLocal,
-        "banners":
-            List<dynamic>.from(banners.map((x) => (x as BannerModel).toJson())),
-        "ownerAccount": (ownerAccount as OwnerAccountModel).toJson(),
       };
 }
 

@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_peertuber/src/features/common/data/models/instance.dart';
+import 'package:flutter_peertuber/src/features/common/domain/entities/instance.dart';
 import 'package:injectable/injectable.dart';
 
 part 'instance_state.dart';
