@@ -19,6 +19,18 @@ class AccountModel extends AccountEntity {
       required super.updatedAt,
       super.userId});
 
+  AccountEntity toEntity() {
+    return AccountEntity(
+      url: url,
+      name: name,
+      host: host,
+      avatars: avatars,
+      avatar: avatar,
+      id: id,
+      displayName: displayName,
+    );
+  }
+
   factory AccountModel.fromJson(Map<String, dynamic> json) => AccountModel(
         url: json["url"],
         name: json["name"],

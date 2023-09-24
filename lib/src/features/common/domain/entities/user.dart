@@ -5,6 +5,7 @@
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_peertuber/src/features/common/domain/entities/entities.dart';
+import 'package:formz/formz.dart';
 
 class UserEntity extends Equatable {
   final AccountEntity account;
@@ -14,7 +15,7 @@ class UserEntity extends Equatable {
   final bool blocked;
   final String blockedReason;
   final String createdAt;
-  final String email;
+  final Email email;
   final bool emailVerified;
   final int id;
   final String pluginAuth;
@@ -25,7 +26,7 @@ class UserEntity extends Equatable {
   final String nsfwPolicy;
   final RoleEntity role;
   final String theme;
-  final String username;
+  final Username username;
   final List<ChannelEntity> videoChannels;
   final int videoQuota;
   final int videoQuotaDaily;
@@ -134,4 +135,59 @@ class OwnerAccountEntity extends Equatable {
         id,
         uuid,
       ];
+}
+
+enum UsernameValidationError { invalid }
+
+class Username extends FormzInput<String, UsernameValidationError> {
+  const Username.pure() : super.pure('');
+
+  const Username.dirty([String value = '']) : super.dirty(value);
+
+  static final RegExp _usernameRegExp = RegExp(
+    r"^[a-z0-9_.]+$",
+  );
+
+  @override
+  UsernameValidationError? validator(String value) {
+    return _usernameRegExp.hasMatch(value)
+        ? null
+        : UsernameValidationError.invalid;
+  }
+}
+
+enum EmailValidationError { invalid }
+
+class Email extends FormzInput<String, EmailValidationError> {
+  const Email.pure() : super.pure('');
+
+  const Email.dirty([String value = '']) : super.dirty(value);
+
+  static final RegExp _emailRegExp = RegExp(
+    r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
+  );
+
+  @override
+  EmailValidationError? validator(String value) {
+    return _emailRegExp.hasMatch(value) ? null : EmailValidationError.invalid;
+  }
+}
+
+enum PasswordValidationError { invalid }
+
+class Password extends FormzInput<String, PasswordValidationError> {
+  const Password.pure() : super.pure('');
+
+  const Password.dirty([String value = '']) : super.dirty(value);
+
+  static final RegExp _passwordRegExp = RegExp(
+    r'^(?=.*[A-Za-z0-9]).{6,}$',
+  );
+
+  @override
+  PasswordValidationError? validator(String value) {
+    return _passwordRegExp.hasMatch(value)
+        ? null
+        : PasswordValidationError.invalid;
+  }
 }

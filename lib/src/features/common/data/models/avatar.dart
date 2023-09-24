@@ -8,6 +8,14 @@ class AvatarModel extends AvatarEntity {
       required super.createdAt,
       required super.updatedAt});
 
+  AvatarEntity toEntity() {
+    return AvatarEntity(
+      path: path,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+    );
+  }
+
   factory AvatarModel.fromJson(Map<String, dynamic> json) => AvatarModel(
         width: json["width"],
         path: json["path"],
