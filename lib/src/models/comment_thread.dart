@@ -5,7 +5,7 @@
 
 import 'dart:convert';
 
-import 'package:flutter_peertuber/src/features/common/data/models/user.dart';
+import 'package:flutter_peertuber/src/features/common/data/models/models.dart';
 
 CommentThread commentFromJson(String str) =>
     CommentThread.fromJson(json.decode(str));

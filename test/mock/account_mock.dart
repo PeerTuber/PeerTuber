@@ -1,4 +1,4 @@
-import 'package:flutter_peertuber/src/features/common/domain/entities/user.dart';
+import 'package:flutter_peertuber/src/features/common/domain/entities/entities.dart';
 
 import 'avatar_mock.dart';
 

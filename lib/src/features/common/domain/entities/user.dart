@@ -4,6 +4,7 @@
 // Generated with https://app.quicktype.io/
 
 import 'package:equatable/equatable.dart';
+import 'package:flutter_peertuber/src/features/common/domain/entities/entities.dart';
 
 class UserEntity extends Equatable {
   final AccountEntity account;
@@ -25,7 +26,7 @@ class UserEntity extends Equatable {
   final RoleEntity role;
   final String theme;
   final String username;
-  final List<VideoChannelEntity> videoChannels;
+  final List<ChannelEntity> videoChannels;
   final int videoQuota;
   final int videoQuotaDaily;
   final bool p2PEnabled;
@@ -84,86 +85,6 @@ class UserEntity extends Equatable {
       ];
 }
 
-class AccountEntity extends Equatable {
-  final String url;
-  final String name;
-  final String host;
-  final List<AvatarEntity> avatars;
-  final AvatarEntity? avatar;
-  final int id;
-  final bool? hostRedundancyAllowed;
-  final int? followingCount;
-  final int? followersCount;
-  final DateTime? createdAt;
-  final List<dynamic>? banners;
-  final String displayName;
-  final String? description;
-  final DateTime? updatedAt;
-  final int? userId;
-
-  const AccountEntity({
-    required this.url,
-    required this.name,
-    required this.host,
-    required this.avatars,
-    required this.avatar,
-    required this.id,
-    this.hostRedundancyAllowed,
-    this.followingCount,
-    this.followersCount,
-    this.createdAt,
-    this.banners,
-    required this.displayName,
-    this.description,
-    this.updatedAt,
-    this.userId,
-  });
-
-  @override
-  List<Object?> get props => [
-        url,
-        name,
-        host,
-        avatars,
-        avatar,
-        id,
-        hostRedundancyAllowed,
-        followingCount,
-        followersCount,
-        createdAt,
-        banners,
-        displayName,
-        description,
-        updatedAt,
-        userId,
-      ];
-}
-
-class AvatarEntity extends Equatable {
-  final int? width;
-  final String path;
-  final String? url;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-
-  const AvatarEntity({
-    this.width,
-    required this.path,
-    this.url,
-    required this.createdAt,
-    required this.updatedAt,
-  });
-
-  @override
-  List<Object?> get props => [
-        width,
-        path,
-        url,
-        createdAt,
-        updatedAt,
-      ];
-}
-
 class RoleEntity extends Equatable {
   final int id;
   final String label;
@@ -175,61 +96,6 @@ class RoleEntity extends Equatable {
 
   @override
   List<Object?> get props => [id, label];
-}
-
-class VideoChannelEntity extends Equatable {
-  final int id;
-  final String url;
-  final String name;
-  final String host;
-  final bool hostRedundancyAllowed;
-  final int followingCount;
-  final int followersCount;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final String displayName;
-  final String description;
-  final String support;
-  final bool isLocal;
-  final List<BannerEntity> banners;
-  final OwnerAccountEntity ownerAccount;
-
-  const VideoChannelEntity({
-    required this.id,
-    required this.url,
-    required this.name,
-    required this.host,
-    required this.hostRedundancyAllowed,
-    required this.followingCount,
-    required this.followersCount,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.displayName,
-    required this.description,
-    required this.support,
-    required this.isLocal,
-    required this.banners,
-    required this.ownerAccount,
-  });
-
-  @override
-  List<Object?> get props => [
-        id,
-        url,
-        name,
-        host,
-        hostRedundancyAllowed,
-        followersCount,
-        followersCount,
-        createdAt,
-        updatedAt,
-        displayName,
-        description,
-        support,
-        isLocal,
-        banners,
-        ownerAccount,
-      ];
 }
 
 class BannerEntity extends Equatable {
