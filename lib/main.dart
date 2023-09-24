@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_peertuber/injection.dart';
+import 'package:flutter_peertuber/src/config/app_router.dart';
 import 'package:flutter_peertuber/src/config/app_theme.dart';
-import 'package:flutter_peertuber/src/core/bloc/instance/instance_cubit.dart';
-import 'package:flutter_peertuber/src/core/bloc/media_player/media_player_bloc.dart';
-import 'package:flutter_peertuber/src/features/navigation/presentation/screens/navigation.dart';
 import 'package:media_kit/media_kit.dart';
 
 void main() {
@@ -25,21 +22,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'PeerTuber',
       debugShowCheckedModeBanner: false,
       theme: CustomTheme().theme(),
-      home: MultiBlocProvider(
-        providers: [
-          BlocProvider<MediaPlayerBloc>(
-            create: (BuildContext context) => getIt<MediaPlayerBloc>(),
-          ),
-          BlocProvider<InstanceCubit>(
-            create: (BuildContext context) => getIt<InstanceCubit>(),
-          ),
-        ],
-        child: const NavScreen(),
-      ),
+      routerConfig: AppRouter().router,
     );
   }
 }
