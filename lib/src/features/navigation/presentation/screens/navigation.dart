@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_peertuber/src/features/home/presentation/screens/home.dart';
 import 'package:flutter_peertuber/src/features/navigation/presentation/widgets/navigation_bottom_bar.dart';
 import 'package:flutter_peertuber/src/features/video_details/presentation/screens/video_details_slidein.dart';
+import 'package:go_router/go_router.dart';
 
 class NavScreen extends StatefulWidget {
-  const NavScreen({super.key});
+  final StatefulNavigationShell navigationShell;
+  const NavScreen({super.key, required this.navigationShell});
 
   @override
   State<NavScreen> createState() => _NavScreenState();
@@ -21,16 +22,6 @@ class _NavScreenState extends State<NavScreen>
       Tween<Offset>(begin: Offset.zero, end: const Offset(0, 5)).animate(
           CurvedAnimation(parent: _animationController, curve: Curves.easeOut));
 
-  int _selectedIndex = 0;
-
-  final _screens = [
-    const HomeScreen(),
-    const Scaffold(body: Center(child: Text('Discover'))),
-    const Scaffold(body: Center(child: Text('Add'))),
-    const Scaffold(body: Center(child: Text('Subscriptions'))),
-    const Scaffold(body: Center(child: Text('Library'))),
-  ];
-
   @override
   void dispose() {
     _animationController.dispose();
@@ -44,19 +35,7 @@ class _NavScreenState extends State<NavScreen>
       backgroundColor: Colors.transparent,
       body: Stack(
         children: [
-          Stack(
-            children: _screens
-                .asMap()
-                .map((i, screen) => MapEntry(
-                      i,
-                      Offstage(
-                        offstage: _selectedIndex != i,
-                        child: screen,
-                      ),
-                    ))
-                .values
-                .toList(),
-          ),
+          widget.navigationShell,
           VideoDetailsSlidein(
             onSlideIn: () => _animationController.animateTo(0.15),
             onSlideOut: () => _animationController.animateTo(-10.5),
@@ -65,10 +44,10 @@ class _NavScreenState extends State<NavScreen>
       ),
       bottomNavigationBar: NavigationBottomBar(
         animation: _animation,
-        selectedIndex: _selectedIndex,
+        selectedIndex: widget.navigationShell.currentIndex,
         onTabChange: (int index) => setState(
           () {
-            _selectedIndex = index;
+            widget.navigationShell.goBranch(index);
           },
         ),
       ),
