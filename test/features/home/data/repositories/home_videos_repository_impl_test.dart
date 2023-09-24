@@ -35,6 +35,7 @@ void main() {
     test('should check if the device is online', () async {
       // arrange
       when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
+      when(mockRemoteDataSource.getHomeVideos()).thenAnswer((_) async => []);
 
       // act
       repository.getHomeVideos();
