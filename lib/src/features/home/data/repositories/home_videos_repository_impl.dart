@@ -22,9 +22,9 @@ class HomeVideosRespositoryImpl implements HomeVideosRespository {
     if (await networkInfo.isConnected) {
       try {
         final remoteVideos = await remoteDataSource.getHomeVideos();
-        return Right(remoteVideos);
+        return Right(remoteVideos.map((e) => e.toEntity()).toList());
       } on ServerException {
-        return Left(ServerFailure());
+        return const Left(ServerFailure());
       }
     } else {
       return Left(NetworkFailure());

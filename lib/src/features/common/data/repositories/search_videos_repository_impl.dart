@@ -26,9 +26,9 @@ class SearchVideosRepositoryImpl implements SearchVideosRepository {
       try {
         final remoteVideos = await remoteDataSource
             .searchVideos(SearchDataModel.fromEntity(searchData));
-        return Right(remoteVideos);
+        return Right(remoteVideos.map((e) => e.toEntity()).toList());
       } on ServerException {
-        return Left(ServerFailure());
+        return const Left(ServerFailure());
       }
     } else {
       return Left(NetworkFailure());

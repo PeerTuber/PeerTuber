@@ -4,6 +4,7 @@ import 'package:internet_connection_checker_plus/internet_connection_checker_plu
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
 import 'package:miniplayer/miniplayer.dart';
+import 'package:peertuber/src/core/network/cache_client.dart';
 import 'injection.config.dart';
 import 'package:http/http.dart' as http;
 
@@ -39,6 +40,9 @@ abstract class RegisterModule {
 
   @lazySingleton
   InternetConnection get internetConnection;
+
+  @lazySingleton
+  CacheClient get cacheClient;
 
   @lazySingleton // or @singleton
   http.Client get httpClient => http.Client();
