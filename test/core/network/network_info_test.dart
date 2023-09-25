@@ -1,4 +1,4 @@
-import 'package:flutter_peertuber/src/core/network/network_info.dart';
+import 'package:peertuber/src/core/network/network_info.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';

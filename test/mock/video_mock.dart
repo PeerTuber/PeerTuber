@@ -1,5 +1,5 @@
-import 'package:flutter_peertuber/src/features/common/data/models/video.dart';
-import 'package:flutter_peertuber/src/features/common/domain/entities/video.dart';
+import 'package:peertuber/src/features/common/data/models/video.dart';
+import 'package:peertuber/src/features/common/domain/entities/video.dart';
 
 import 'account_mock.dart';
 import 'category_mock.dart';

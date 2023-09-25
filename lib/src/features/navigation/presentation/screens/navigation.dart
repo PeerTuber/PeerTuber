@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_peertuber/src/features/navigation/presentation/widgets/navigation_bottom_bar.dart';
-import 'package:flutter_peertuber/src/features/video_details/presentation/screens/video_details_slidein.dart';
+import 'package:peertuber/src/features/navigation/presentation/widgets/navigation_bottom_bar.dart';
+import 'package:peertuber/src/features/video_details/presentation/screens/video_details_slidein.dart';
 import 'package:go_router/go_router.dart';
 
 class NavScreen extends StatefulWidget {

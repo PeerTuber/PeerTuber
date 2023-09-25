@@ -19,9 +19,6 @@ import 'package:media_kit_video/media_kit_video.dart' as _i14;
 import 'package:miniplayer/miniplayer.dart' as _i7;
 
 import 'injection.dart' as _i26;
-import 'src/core/bloc/instance/instance_cubit.dart' as _i5;
-import 'src/core/bloc/media_player/media_player_bloc.dart' as _i25;
-import 'src/core/bloc/search_videos/search_videos_bloc.dart' as _i21;
 import 'src/core/network/network_info.dart' as _i8;
 import 'src/features/common/data/datasources/search_videos_remote_data_source.dart'
     as _i10;
@@ -30,6 +27,12 @@ import 'src/features/common/data/repositories/search_videos_repository_impl.dart
 import 'src/features/common/domain/repositories/search_videos_repository.dart'
     as _i11;
 import 'src/features/common/domain/usecases/search_videos.dart' as _i13;
+import 'src/features/common/presentation/bloc/instance/instance_cubit.dart'
+    as _i5;
+import 'src/features/common/presentation/bloc/media_player/media_player_bloc.dart'
+    as _i25;
+import 'src/features/common/presentation/bloc/search_videos/search_videos_bloc.dart'
+    as _i21;
 import 'src/features/home/data/datasources/home_videos_remote_data_source.dart'
     as _i4;
 import 'src/features/home/data/repositories/home_videos_repository_impl.dart'

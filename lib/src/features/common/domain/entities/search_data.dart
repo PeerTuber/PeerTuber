@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_peertuber/src/core/constants/enums.dart';
+import 'package:peertuber/src/core/constants/enums.dart';
 
 class SearchDataEntity extends Equatable {
   final String instanceHost;

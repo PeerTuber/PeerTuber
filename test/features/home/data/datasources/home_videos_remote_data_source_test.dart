@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:flutter_peertuber/src/core/error/exceptions.dart';
-import 'package:flutter_peertuber/src/features/common/data/models/video.dart';
-import 'package:flutter_peertuber/src/features/home/data/datasources/home_videos_remote_data_source.dart';
+import 'package:peertuber/src/core/error/exceptions.dart';
+import 'package:peertuber/src/features/common/data/models/video.dart';
+import 'package:peertuber/src/features/home/data/datasources/home_videos_remote_data_source.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';

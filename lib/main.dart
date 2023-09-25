@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_peertuber/injection.dart';
-import 'package:flutter_peertuber/src/config/app_router.dart';
-import 'package:flutter_peertuber/src/config/app_theme.dart';
+import 'package:peertuber/injection.dart';
+import 'package:peertuber/src/config/app_router.dart';
+import 'package:peertuber/src/config/app_theme.dart';
 import 'package:media_kit/media_kit.dart';
 
 void main() {

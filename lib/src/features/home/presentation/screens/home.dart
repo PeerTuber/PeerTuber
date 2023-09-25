@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_peertuber/injection.dart';
-import 'package:flutter_peertuber/src/features/common/presentation/widgets/widgets.dart';
-import 'package:flutter_peertuber/src/features/home/presentation/bloc/home_bloc.dart';
+import 'package:peertuber/injection.dart';
+import 'package:peertuber/src/features/common/presentation/widgets/widgets.dart';
+import 'package:peertuber/src/features/home/presentation/bloc/home_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

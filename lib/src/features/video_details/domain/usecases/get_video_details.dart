@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_peertuber/src/features/common/domain/entities/video.dart';
-import 'package:flutter_peertuber/src/core/error/failures.dart';
-import 'package:flutter_peertuber/src/features/common/domain/usecases/usecase.dart';
-import 'package:flutter_peertuber/src/features/video_details/domain/repositories/video_details_repository.dart';
+import 'package:peertuber/src/features/common/domain/entities/video.dart';
+import 'package:peertuber/src/core/error/failures.dart';
+import 'package:peertuber/src/features/common/domain/usecases/usecase.dart';
+import 'package:peertuber/src/features/video_details/domain/repositories/video_details_repository.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
