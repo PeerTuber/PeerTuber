@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_peertuber/src/features/common/domain/entities/entities.dart';
+import 'package:peertuber/src/features/common/domain/entities/entities.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class VideoInfo extends StatelessWidget {

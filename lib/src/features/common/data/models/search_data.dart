@@ -1,5 +1,5 @@
-import 'package:flutter_peertuber/src/core/constants/enums.dart';
-import 'package:flutter_peertuber/src/features/common/domain/entities/search_data.dart';
+import 'package:peertuber/src/core/constants/enums.dart';
+import 'package:peertuber/src/features/common/domain/entities/search_data.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'search_data.g.dart';

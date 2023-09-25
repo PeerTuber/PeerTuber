@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_peertuber/injection.dart';
-import 'package:flutter_peertuber/src/core/bloc/media_player/media_player_bloc.dart';
-import 'package:flutter_peertuber/src/core/bloc/search_videos/search_videos_bloc.dart';
-import 'package:flutter_peertuber/src/features/common/domain/entities/search_data.dart';
-import 'package:flutter_peertuber/src/features/common/domain/entities/video.dart';
-import 'package:flutter_peertuber/src/features/common/presentation/widgets/widgets.dart';
-import 'package:flutter_peertuber/src/features/video_details/presentation/bloc/video_details_block.dart';
+import 'package:peertuber/injection.dart';
+import 'package:peertuber/src/features/common/domain/entities/search_data.dart';
+import 'package:peertuber/src/features/common/domain/entities/video.dart';
+import 'package:peertuber/src/features/common/presentation/bloc/media_player/media_player_bloc.dart';
+import 'package:peertuber/src/features/common/presentation/bloc/search_videos/search_videos_bloc.dart';
+import 'package:peertuber/src/features/common/presentation/widgets/widgets.dart';
+import 'package:peertuber/src/features/video_details/presentation/bloc/video_details_block.dart';
 import 'package:media_kit_video/media_kit_video.dart';
 
 import '../widgets/widgets.dart';

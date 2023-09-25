@@ -4,7 +4,7 @@
 // Generated with https://app.quicktype.io/
 
 import 'package:equatable/equatable.dart';
-import 'package:flutter_peertuber/src/features/common/domain/entities/entities.dart';
+import 'package:peertuber/src/features/common/domain/entities/entities.dart';
 import 'package:formz/formz.dart';
 
 class UserEntity extends Equatable {

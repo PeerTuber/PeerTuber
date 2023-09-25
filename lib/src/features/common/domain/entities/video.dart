@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_peertuber/src/features/common/domain/entities/entities.dart';
+import 'package:peertuber/src/features/common/domain/entities/entities.dart';
 
 class VideoEntity extends Equatable {
   final int id;

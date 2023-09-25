@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_peertuber/src/core/bloc/media_player/media_player_bloc.dart';
-import 'package:flutter_peertuber/src/features/video_details/presentation/widgets/mini_player_content.dart';
-import 'package:flutter_peertuber/src/features/video_details/presentation/screens/video_details.dart';
+import 'package:peertuber/src/features/common/presentation/bloc/media_player/media_player_bloc.dart';
+import 'package:peertuber/src/features/video_details/presentation/widgets/mini_player_content.dart';
+import 'package:peertuber/src/features/video_details/presentation/screens/video_details.dart';
 import 'package:miniplayer/miniplayer.dart';
 
 class VideoDetailsSlidein extends HookWidget {

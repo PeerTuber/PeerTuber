@@ -1,5 +1,5 @@
-import 'package:flutter_peertuber/src/core/error/exceptions.dart';
-import 'package:flutter_peertuber/src/features/common/data/models/video.dart';
+import 'package:peertuber/src/core/error/exceptions.dart';
+import 'package:peertuber/src/features/common/data/models/video.dart';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
 

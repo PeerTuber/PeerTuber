@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_peertuber/src/features/common/domain/usecases/usecase.dart';
-import 'package:flutter_peertuber/src/features/home/domain/repositories/home_videos_repository.dart';
-import 'package:flutter_peertuber/src/features/home/domain/usecases/get_home_videos.dart';
+import 'package:peertuber/src/features/common/domain/usecases/usecase.dart';
+import 'package:peertuber/src/features/home/domain/repositories/home_videos_repository.dart';
+import 'package:peertuber/src/features/home/domain/usecases/get_home_videos.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_peertuber/src/features/common/domain/entities/search_data.dart';
-import 'package:flutter_peertuber/src/features/common/domain/entities/video.dart';
-import 'package:flutter_peertuber/src/core/error/failures.dart';
+import 'package:peertuber/src/features/common/domain/entities/search_data.dart';
+import 'package:peertuber/src/features/common/domain/entities/video.dart';
+import 'package:peertuber/src/core/error/failures.dart';
 
 abstract class UseCase<Type, Params> {
   Future<Either<Failure, Type>> call(Params params);

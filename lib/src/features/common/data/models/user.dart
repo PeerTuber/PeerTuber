@@ -5,8 +5,8 @@
 
 import 'dart:convert';
 
-import 'package:flutter_peertuber/src/features/common/data/models/models.dart';
-import 'package:flutter_peertuber/src/features/common/domain/entities/entities.dart';
+import 'package:peertuber/src/features/common/data/models/models.dart';
+import 'package:peertuber/src/features/common/domain/entities/entities.dart';
 
 UserModel userFromJson(String str) => UserModel.fromJson(json.decode(str));
 

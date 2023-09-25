@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_peertuber/src/core/bloc/media_player/media_player_bloc.dart';
-import 'package:flutter_peertuber/src/features/common/domain/entities/video.dart';
+import 'package:peertuber/src/features/common/domain/entities/video.dart';
 import 'package:media_kit_video/media_kit_video.dart';
+import 'package:peertuber/src/features/common/presentation/bloc/media_player/media_player_bloc.dart';
 
 class MiniPlayerContent extends HookWidget {
   final VideoEntity video;
