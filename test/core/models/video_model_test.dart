@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:peertuber/src/features/common/data/models/video.dart';
-import 'package:peertuber/src/features/common/domain/entities/video.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../mock/video_mock.dart';

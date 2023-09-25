@@ -208,7 +208,7 @@ class RemoteAuthDataSourceImpl implements RemoteAuthDataSource {
         },
       );
     } on http.ClientException {
-      return Left(ServerFailure());
+      return const Left(ServerFailure());
     }
 
     final Map<String, dynamic> responseJson = jsonDecode(response.body);

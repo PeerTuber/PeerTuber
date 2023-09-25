@@ -24,7 +24,7 @@ class HomeVideosRespositoryImpl implements HomeVideosRespository {
         final remoteVideos = await remoteDataSource.getHomeVideos();
         return Right(remoteVideos.map((e) => e.toEntity()).toList());
       } on ServerException {
-        return Left(ServerFailure());
+        return const Left(ServerFailure());
       }
     } else {
       return Left(NetworkFailure());

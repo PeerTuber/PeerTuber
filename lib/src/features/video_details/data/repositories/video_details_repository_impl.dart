@@ -24,7 +24,7 @@ class VideoDetailsRepositoryImpl implements VideoDetailsRepository {
         final remoteVideo = await remoteDataSource.getVideoDetailsById(id);
         return Right(remoteVideo.toEntity());
       } on ServerException {
-        return Left(ServerFailure());
+        return const Left(ServerFailure());
       }
     } else {
       return Left(NetworkFailure());
@@ -40,7 +40,7 @@ class VideoDetailsRepositoryImpl implements VideoDetailsRepository {
             await remoteDataSource.getVideoDetailsByUrl(url, uuid);
         return Right(remoteVideo.toEntity());
       } on ServerException {
-        return Left(ServerFailure());
+        return const Left(ServerFailure());
       }
     } else {
       return Left(NetworkFailure());

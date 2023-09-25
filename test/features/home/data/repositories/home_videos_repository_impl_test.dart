@@ -81,7 +81,7 @@ void main() {
 
         // assert
         verify(mockRemoteDataSource.getHomeVideos());
-        expect(result, equals(Left(ServerFailure())));
+        expect(result, equals(const Left(ServerFailure())));
       });
     });
 
