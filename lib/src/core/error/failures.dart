@@ -6,6 +6,10 @@ abstract class Failure extends Equatable {
 
 // General failures
 class ServerFailure extends Failure {
+  final String? message;
+
+  const ServerFailure({this.message = 'Server Failure'});
+
   @override
   List<Object?> get props => [];
 }

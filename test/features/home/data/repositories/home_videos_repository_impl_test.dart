@@ -30,7 +30,7 @@ void main() {
 
   group('getHomeVideos', () {
     final VideoModel tVideoMockModel = tVideoModel;
-    final VideoEntity tVideoMock = tVideoMockModel;
+    final VideoEntity tVideoMock = tVideoMockModel.toEntity();
 
     test('should check if the device is online', () async {
       // arrange

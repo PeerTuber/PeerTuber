@@ -5,6 +5,7 @@
 
 import 'dart:convert';
 
+import 'package:equatable/equatable.dart';
 import 'package:peertuber/src/features/common/data/models/models.dart';
 import 'package:peertuber/src/features/common/domain/entities/entities.dart';
 
@@ -12,35 +13,86 @@ UserModel userFromJson(String str) => UserModel.fromJson(json.decode(str));
 
 String userToJson(UserModel data) => json.encode(data.toJson());
 
-class UserModel extends UserEntity {
-  const UserModel(
-      {required super.account,
-      required super.autoPlayNextVideo,
-      required super.autoPlayNextVideoPlaylist,
-      required super.autoPlayVideo,
-      required super.blocked,
-      required super.blockedReason,
-      required super.createdAt,
-      required super.email,
-      required super.emailVerified,
-      required super.id,
-      required super.pluginAuth,
-      required super.lastLoginDate,
-      required super.noInstanceConfigWarningModal,
-      required super.noAccountSetupWarningModal,
-      required super.noWelcomeModal,
-      required super.nsfwPolicy,
-      required super.role,
-      required super.theme,
-      required super.username,
-      required super.videoChannels,
-      required super.videoQuota,
-      required super.videoQuotaDaily,
-      required super.p2PEnabled});
+class UserModel extends Equatable {
+  final AccountModel? account;
+  final bool autoPlayNextVideo;
+  final bool autoPlayNextVideoPlaylist;
+  final bool autoPlayVideo;
+  final bool blocked;
+  final String blockedReason;
+  final String createdAt;
+  final Email email;
+  final bool emailVerified;
+  final int id;
+  final String pluginAuth;
+  final DateTime? lastLoginDate;
+  final bool noInstanceConfigWarningModal;
+  final bool noAccountSetupWarningModal;
+  final bool noWelcomeModal;
+  final String nsfwPolicy;
+  final RoleModel role;
+  final String theme;
+  final Username username;
+  final List<ChannelModel> videoChannels;
+  final int videoQuota;
+  final int videoQuotaDaily;
+  final bool p2PEnabled;
+
+  const UserModel({
+    this.account,
+    required this.autoPlayNextVideo,
+    required this.autoPlayNextVideoPlaylist,
+    required this.autoPlayVideo,
+    required this.blocked,
+    required this.blockedReason,
+    required this.createdAt,
+    required this.email,
+    required this.emailVerified,
+    required this.id,
+    required this.pluginAuth,
+    this.lastLoginDate,
+    required this.noInstanceConfigWarningModal,
+    required this.noAccountSetupWarningModal,
+    required this.noWelcomeModal,
+    required this.nsfwPolicy,
+    required this.role,
+    required this.theme,
+    required this.username,
+    required this.videoChannels,
+    required this.videoQuota,
+    required this.videoQuotaDaily,
+    required this.p2PEnabled,
+  });
+
+  static const empty = UserModel(
+    account: null,
+    autoPlayNextVideo: false,
+    autoPlayNextVideoPlaylist: false,
+    autoPlayVideo: false,
+    blocked: false,
+    blockedReason: '',
+    createdAt: '',
+    email: Email.pure(),
+    emailVerified: false,
+    id: 0,
+    pluginAuth: '',
+    lastLoginDate: null,
+    noInstanceConfigWarningModal: false,
+    noAccountSetupWarningModal: false,
+    noWelcomeModal: false,
+    nsfwPolicy: '',
+    role: RoleModel(id: 0, label: ''),
+    theme: '',
+    username: Username.pure(),
+    videoChannels: [],
+    videoQuota: 0,
+    videoQuotaDaily: 0,
+    p2PEnabled: false,
+  );
 
   factory UserModel.fromEntity(UserEntity user) {
     return UserModel(
-      account: user.account,
+      account: AccountModel.fromEntity(user.account),
       autoPlayNextVideo: user.autoPlayNextVideo,
       autoPlayNextVideoPlaylist: user.autoPlayNextVideoPlaylist,
       autoPlayVideo: user.autoPlayVideo,
@@ -56,10 +108,11 @@ class UserModel extends UserEntity {
       noAccountSetupWarningModal: user.noAccountSetupWarningModal,
       noWelcomeModal: user.noWelcomeModal,
       nsfwPolicy: user.nsfwPolicy,
-      role: user.role,
+      role: RoleModel.fromEntity(user.role),
       theme: user.theme,
       username: user.username,
-      videoChannels: user.videoChannels,
+      videoChannels:
+          user.videoChannels.map((e) => ChannelModel.fromEntity(e)).toList(),
       videoQuota: user.videoQuota,
       videoQuotaDaily: user.videoQuotaDaily,
       p2PEnabled: user.p2PEnabled,
@@ -68,7 +121,7 @@ class UserModel extends UserEntity {
 
   UserEntity toEntity() {
     return UserEntity(
-      account: account,
+      account: account!.toEntity(),
       autoPlayNextVideo: autoPlayNextVideo,
       autoPlayNextVideoPlaylist: autoPlayNextVideoPlaylist,
       autoPlayVideo: autoPlayVideo,
@@ -84,10 +137,10 @@ class UserModel extends UserEntity {
       noAccountSetupWarningModal: noAccountSetupWarningModal,
       noWelcomeModal: noWelcomeModal,
       nsfwPolicy: nsfwPolicy,
-      role: role,
+      role: role.toEntity(),
       theme: theme,
       username: username,
-      videoChannels: videoChannels,
+      videoChannels: videoChannels.map((e) => e.toEntity()).toList(),
       videoQuota: videoQuota,
       videoQuotaDaily: videoQuotaDaily,
       p2PEnabled: p2PEnabled,
@@ -132,12 +185,12 @@ class UserModel extends UserEntity {
         "emailVerified": emailVerified,
         "id": id,
         "pluginAuth": pluginAuth,
-        "lastLoginDate": lastLoginDate.toIso8601String(),
+        "lastLoginDate": lastLoginDate?.toIso8601String(),
         "noInstanceConfigWarningModal": noInstanceConfigWarningModal,
         "noAccountSetupWarningModal": noAccountSetupWarningModal,
         "noWelcomeModal": noWelcomeModal,
         "nsfwPolicy": nsfwPolicy,
-        "role": (role as RoleModel).toJson(),
+        "role": role.toJson(),
         "theme": theme,
         "username": username,
         "videoChannels": List<dynamic>.from(
@@ -146,10 +199,60 @@ class UserModel extends UserEntity {
         "videoQuotaDaily": videoQuotaDaily,
         "p2pEnabled": p2PEnabled,
       };
+
+  @override
+  List<Object?> get props => [
+        account,
+        autoPlayNextVideo,
+        autoPlayNextVideoPlaylist,
+        autoPlayNextVideo,
+        blocked,
+        blockedReason,
+        createdAt,
+        email,
+        emailVerified,
+        id,
+        pluginAuth,
+        lastLoginDate,
+        noInstanceConfigWarningModal,
+        noAccountSetupWarningModal,
+        noWelcomeModal,
+        nsfwPolicy,
+        role,
+        theme,
+        username,
+        videoChannels,
+        videoQuota,
+        videoQuotaDaily,
+        p2PEnabled,
+      ];
 }
 
-class RoleModel extends RoleEntity {
-  const RoleModel({required super.id, required super.label});
+class RoleModel extends Equatable {
+  final int id;
+  final String label;
+
+  const RoleModel({
+    required this.id,
+    required this.label,
+  });
+
+  @override
+  List<Object?> get props => [id, label];
+
+  RoleEntity toEntity() {
+    return RoleEntity(
+      id: id,
+      label: label,
+    );
+  }
+
+  factory RoleModel.fromEntity(RoleEntity role) {
+    return RoleModel(
+      id: role.id,
+      label: role.label,
+    );
+  }
 
   factory RoleModel.fromJson(Map<String, dynamic> json) => RoleModel(
         id: json["id"],
@@ -162,12 +265,26 @@ class RoleModel extends RoleEntity {
       };
 }
 
-class BannerModel extends BannerEntity {
-  const BannerModel(
-      {required super.path,
-      required super.width,
-      required super.createdAt,
-      required super.updatedAt});
+class BannerModel extends Equatable {
+  final String path;
+  final int width;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+
+  const BannerModel({
+    required this.path,
+    required this.width,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  @override
+  List<Object?> get props => [
+        path,
+        width,
+        createdAt,
+        updatedAt,
+      ];
 
   factory BannerModel.fromJson(Map<String, dynamic> json) => BannerModel(
         path: json["path"],
@@ -184,8 +301,20 @@ class BannerModel extends BannerEntity {
       };
 }
 
-class OwnerAccountModel extends OwnerAccountEntity {
-  const OwnerAccountModel({required super.id, required super.uuid});
+class OwnerAccountModel extends Equatable {
+  final int id;
+  final String uuid;
+
+  const OwnerAccountModel({
+    required this.id,
+    required this.uuid,
+  });
+
+  @override
+  List<Object?> get props => [
+        id,
+        uuid,
+      ];
 
   factory OwnerAccountModel.fromJson(Map<String, dynamic> json) =>
       OwnerAccountModel(

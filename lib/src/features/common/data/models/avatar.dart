@@ -16,6 +16,16 @@ class AvatarModel extends AvatarEntity {
     );
   }
 
+  factory AvatarModel.fromEntity(AvatarEntity entity) {
+    return AvatarModel(
+      width: entity.width,
+      path: entity.path,
+      url: entity.url,
+      createdAt: entity.createdAt,
+      updatedAt: entity.updatedAt,
+    );
+  }
+
   factory AvatarModel.fromJson(Map<String, dynamic> json) => AvatarModel(
         width: json["width"],
         path: json["path"],

@@ -54,4 +54,22 @@ class AccountEntity extends Equatable {
         updatedAt,
         userId,
       ];
+
+  static const empty = AccountEntity(
+    url: '',
+    name: '',
+    host: '',
+    avatars: [],
+    avatar: null,
+    id: 0,
+    hostRedundancyAllowed: false,
+    followingCount: 0,
+    followersCount: 0,
+    createdAt: null,
+    banners: null,
+    displayName: '',
+    description: '',
+    updatedAt: null,
+    userId: null,
+  );
 }

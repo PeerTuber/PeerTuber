@@ -21,8 +21,8 @@ class VideoDetailsRepositoryImpl implements VideoDetailsRepository {
   Future<Either<Failure, VideoEntity>> getVideoDetailsById(int id) async {
     if (await networkInfo.isConnected) {
       try {
-        final remoteVideos = await remoteDataSource.getVideoDetailsById(id);
-        return Right(remoteVideos);
+        final remoteVideo = await remoteDataSource.getVideoDetailsById(id);
+        return Right(remoteVideo.toEntity());
       } on ServerException {
         return Left(ServerFailure());
       }
@@ -36,9 +36,9 @@ class VideoDetailsRepositoryImpl implements VideoDetailsRepository {
       String url, String uuid) async {
     if (await networkInfo.isConnected) {
       try {
-        final remoteVideos =
+        final remoteVideo =
             await remoteDataSource.getVideoDetailsByUrl(url, uuid);
-        return Right(remoteVideos);
+        return Right(remoteVideo.toEntity());
       } on ServerException {
         return Left(ServerFailure());
       }
