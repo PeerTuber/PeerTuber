@@ -121,6 +121,7 @@ class RemoteAuthDataSourceImpl implements RemoteAuthDataSource {
   }
 
   /// Updates the logged-in user.
+  /*
   void _updateLoggedInUser(
       {int? id,
       Username? username,
@@ -140,6 +141,7 @@ class RemoteAuthDataSourceImpl implements RemoteAuthDataSource {
 
     cacheClient.write(key: userCacheKey, value: loggedInUser);
   }
+  */
 
   /// Logs in a user with the provided [clientRecord], [username], and [password].
   ///
