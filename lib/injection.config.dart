@@ -18,7 +18,7 @@ import 'package:media_kit/media_kit.dart' as _i10;
 import 'package:media_kit_video/media_kit_video.dart' as _i16;
 import 'package:miniplayer/miniplayer.dart' as _i8;
 
-import 'injection.dart' as _i36;
+import 'injection.dart' as _i37;
 import 'src/core/network/cache_client.dart' as _i3;
 import 'src/core/network/network_info.dart' as _i9;
 import 'src/features/auth/data/datasources/remote_auth_data_source.dart'
@@ -31,6 +31,7 @@ import 'src/features/auth/domain/usecases/login_user.dart' as _i27;
 import 'src/features/auth/domain/usecases/logout_user.dart' as _i28;
 import 'src/features/auth/domain/usecases/signup_user.dart' as _i30;
 import 'src/features/auth/presentation/blocs/auth/auth_bloc.dart' as _i32;
+import 'src/features/auth/presentation/blocs/login/login_cubit.dart' as _i35;
 import 'src/features/common/data/datasources/search_videos_remote_data_source.dart'
     as _i12;
 import 'src/features/common/data/repositories/search_videos_repository_impl.dart'
@@ -41,7 +42,7 @@ import 'src/features/common/domain/usecases/search_videos.dart' as _i15;
 import 'src/features/common/presentation/bloc/instance/instance_cubit.dart'
     as _i6;
 import 'src/features/common/presentation/bloc/media_player/media_player_bloc.dart'
-    as _i35;
+    as _i36;
 import 'src/features/common/presentation/bloc/search_videos/search_videos_bloc.dart'
     as _i29;
 import 'src/features/home/data/datasources/home_videos_remote_data_source.dart'
@@ -152,7 +153,9 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i33.GetHomeVideos(gh<_i25.HomeVideosRespository>()));
     gh.factory<_i34.HomeBloc>(
         () => _i34.HomeBloc(getHomeVideos: gh<_i33.GetHomeVideos>()));
-    gh.factory<_i35.MediaPlayerBloc>(() => _i35.MediaPlayerBloc(
+    gh.factory<_i35.LoginCubit>(
+        () => _i35.LoginCubit(loginUser: gh<_i27.LoginUser>()));
+    gh.factory<_i36.MediaPlayerBloc>(() => _i36.MediaPlayerBloc(
           controller: gh<_i16.VideoController>(),
           miniController: gh<_i8.MiniplayerController>(),
         ));
@@ -160,7 +163,7 @@ extension GetItInjectableX on _i1.GetIt {
   }
 }
 
-class _$RegisterModule extends _i36.RegisterModule {
+class _$RegisterModule extends _i37.RegisterModule {
   @override
   _i3.CacheClient get cacheClient => _i3.CacheClient();
   @override

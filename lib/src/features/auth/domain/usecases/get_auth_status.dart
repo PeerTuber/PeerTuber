@@ -1,5 +1,5 @@
 import 'package:injectable/injectable.dart';
-import 'package:peertuber/src/features/auth/data/datasources/remote_auth_data_source.dart';
+import 'package:peertuber/src/core/constants/enums.dart';
 import 'package:peertuber/src/features/auth/domain/repositories/auth_repository.dart';
 import 'package:peertuber/src/features/common/domain/usecases/usecase.dart';
 

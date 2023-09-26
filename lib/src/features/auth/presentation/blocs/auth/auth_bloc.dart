@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
-import 'package:peertuber/src/features/auth/data/datasources/remote_auth_data_source.dart';
+import 'package:peertuber/src/core/constants/enums.dart';
 import 'package:peertuber/src/features/auth/domain/entities/logged_in_user.dart';
 import 'package:peertuber/src/features/auth/domain/usecases/get_auth_status.dart';
 import 'package:peertuber/src/features/auth/domain/usecases/get_logged_in_user.dart';
@@ -32,7 +32,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthGetStatus>(_onGetStatus);
     on<AuthLogoutUser>(_onLogoutUser);
 
-    _authStatusSubscription = _getAuthStatus(NoParams()).listen((status) {
+    _authStatusSubscription =
+        _getAuthStatus(NoParams()).listen((AuthStatus status) {
       add(AuthGetStatus(status));
     });
   }

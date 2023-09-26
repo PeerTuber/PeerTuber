@@ -3,7 +3,6 @@ import 'package:injectable/injectable.dart';
 import 'package:peertuber/src/core/error/failures.dart';
 import 'package:peertuber/src/features/auth/domain/entities/logged_in_user.dart';
 import 'package:peertuber/src/features/auth/domain/repositories/auth_repository.dart';
-import 'package:peertuber/src/features/common/domain/entities/entities.dart';
 import 'package:peertuber/src/features/common/domain/usecases/usecase.dart';
 
 @lazySingleton

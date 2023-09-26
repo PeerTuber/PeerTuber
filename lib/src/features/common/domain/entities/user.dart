@@ -4,8 +4,8 @@
 // Generated with https://app.quicktype.io/
 
 import 'package:equatable/equatable.dart';
+import 'package:peertuber/src/features/auth/domain/entities/logged_in_user.dart';
 import 'package:peertuber/src/features/common/domain/entities/entities.dart';
-import 'package:formz/formz.dart';
 
 class UserEntity extends Equatable {
   final AccountEntity account;
@@ -216,59 +216,4 @@ class OwnerAccountEntity extends Equatable {
         id,
         uuid,
       ];
-}
-
-enum UsernameValidationError { invalid }
-
-class Username extends FormzInput<String, UsernameValidationError> {
-  const Username.pure() : super.pure('');
-
-  const Username.dirty([String value = '']) : super.dirty(value);
-
-  static final RegExp _usernameRegExp = RegExp(
-    r"^[a-z0-9_.]+$",
-  );
-
-  @override
-  UsernameValidationError? validator(String value) {
-    return _usernameRegExp.hasMatch(value)
-        ? null
-        : UsernameValidationError.invalid;
-  }
-}
-
-enum EmailValidationError { invalid }
-
-class Email extends FormzInput<String, EmailValidationError> {
-  const Email.pure() : super.pure('');
-
-  const Email.dirty([String value = '']) : super.dirty(value);
-
-  static final RegExp _emailRegExp = RegExp(
-    r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
-  );
-
-  @override
-  EmailValidationError? validator(String value) {
-    return _emailRegExp.hasMatch(value) ? null : EmailValidationError.invalid;
-  }
-}
-
-enum PasswordValidationError { invalid }
-
-class Password extends FormzInput<String, PasswordValidationError> {
-  const Password.pure() : super.pure('');
-
-  const Password.dirty([String value = '']) : super.dirty(value);
-
-  static final RegExp _passwordRegExp = RegExp(
-    r'^(?=.*[A-Za-z0-9]).{6,}$',
-  );
-
-  @override
-  PasswordValidationError? validator(String value) {
-    return _passwordRegExp.hasMatch(value)
-        ? null
-        : PasswordValidationError.invalid;
-  }
 }

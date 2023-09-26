@@ -8,17 +8,6 @@ import 'package:peertuber/src/core/error/exceptions.dart';
 import 'package:peertuber/src/core/error/failures.dart';
 import 'package:peertuber/src/core/network/cache_client.dart';
 import 'package:peertuber/src/features/auth/domain/entities/logged_in_user.dart';
-import 'package:peertuber/src/features/common/domain/entities/entities.dart';
-
-/// The enumeration of possible authentication status.
-///
-/// This enumeration is used in the remote authentication data source
-/// to represent the different states of authentication.
-enum AuthStatus {
-  unknown,
-  authenticated,
-  unauthenticated,
-}
 
 /// A type that represents a client record containing a client ID and client secret.
 typedef ClientRecord = ({String clientId, String clientSecret});
@@ -45,7 +34,10 @@ class RemoteAuthDataSourceImpl implements RemoteAuthDataSource {
   static const clientCacheKey = '__client_cache_key';
 
   @override
-  Stream<AuthStatus> get status => throw UnimplementedError();
+  Stream<AuthStatus> get status async* {
+    yield AuthStatus.unauthenticated;
+    yield* _controller.stream;
+  }
 
   @override
 
@@ -69,8 +61,22 @@ class RemoteAuthDataSourceImpl implements RemoteAuthDataSource {
       cacheClient.write(key: clientCacheKey, value: clientRecord);
     }
 
-    return _loginUser(
+    // Log in the user
+    final user = await _loginUser(
         clientRecord: clientRecord!, username: username, password: password);
+
+    // Update the logged in user
+    _updateLoggedInUser(
+      username: user.username,
+      accessToken: user.accessToken,
+      refreshToken: user.refreshToken,
+    );
+
+    // Emit the new authentication status
+    _controller.add(AuthStatus.authenticated);
+
+    // Return the logged in user
+    return user;
   }
 
   @override
@@ -105,7 +111,7 @@ class RemoteAuthDataSourceImpl implements RemoteAuthDataSource {
       response = await httpClient
           .get(uri, headers: {'Content-Type': 'application/json'});
     } on http.ClientException {
-      throw ServerException();
+      throw const LoginFailure(reason: LoginFailureReason.clientKeyError);
     }
 
     if (response.statusCode == 200) {
@@ -116,7 +122,7 @@ class RemoteAuthDataSourceImpl implements RemoteAuthDataSource {
         clientSecret: data['client_secret'] as String
       );
     } else {
-      throw ServerException();
+      throw const LoginFailure(reason: LoginFailureReason.clientKeyError);
     }
   }
 
@@ -183,7 +189,15 @@ class RemoteAuthDataSourceImpl implements RemoteAuthDataSource {
           refreshToken: data['refresh_token'] as String,
           username: username);
     } else {
-      throw ServerException();
+      switch (response.statusCode) {
+        case 400:
+          throw const LoginFailure(
+              reason: LoginFailureReason.credentialsNotValid);
+        case 401:
+          throw const LoginFailure(reason: LoginFailureReason.tokenExpired);
+        default:
+          throw ServerException();
+      }
     }
   }
 

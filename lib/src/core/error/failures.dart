@@ -5,14 +5,13 @@ abstract class Failure extends Equatable {
   const Failure([List properties = const <dynamic>[]]) : super();
 }
 
-// General failures
 class ServerFailure extends Failure {
   final String? message;
 
   const ServerFailure({this.message = 'Server Failure'});
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [message];
 }
 
 class CacheFailure extends Failure {
@@ -33,4 +32,26 @@ class SignupFailure extends Failure {
 
   @override
   List<Object?> get props => [reason, message];
+}
+
+class LoginFailure extends Failure {
+  final LoginFailureReason reason;
+
+  const LoginFailure({required this.reason});
+
+  static String fromReason(LoginFailureReason reason) {
+    switch (reason) {
+      case LoginFailureReason.credentialsNotValid:
+        return 'Username or password is not valid';
+      case LoginFailureReason.tokenExpired:
+        return 'Loggin session expired. Please login again';
+      case LoginFailureReason.clientKeyError:
+        return 'There was a problem authenticating with the server. Please try again later';
+      default:
+        return 'Unknown error';
+    }
+  }
+
+  @override
+  List<Object?> get props => [reason];
 }

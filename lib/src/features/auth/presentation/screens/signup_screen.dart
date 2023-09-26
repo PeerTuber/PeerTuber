@@ -52,16 +52,15 @@ class _LoginRedirect extends StatelessWidget {
       onTap: () {
         context.goNamed('login');
       },
-      child: RichText(
-        text: TextSpan(
+      child: const Text.rich(
+        TextSpan(
           children: [
-            const TextSpan(text: 'Already have an account? '),
+            TextSpan(text: 'Already have an account? '),
             TextSpan(
-              text: 'Login',
-              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
+                text: 'Login',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                )),
           ],
         ),
       ),
