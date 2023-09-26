@@ -12,3 +12,9 @@ enum SearchTargetType {
   local,
   searchIndex,
 }
+
+enum SignupFailureReason {
+  registrationNotEnabled,
+  usernameOrEmailTaken,
+  unknown,
+}

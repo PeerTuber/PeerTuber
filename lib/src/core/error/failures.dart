@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:peertuber/src/core/constants/enums.dart';
 
 abstract class Failure extends Equatable {
   const Failure([List properties = const <dynamic>[]]) : super();
@@ -22,4 +23,14 @@ class CacheFailure extends Failure {
 class NetworkFailure extends Failure {
   @override
   List<Object?> get props => [];
+}
+
+class SignupFailure extends Failure {
+  final SignupFailureReason reason;
+  final String? message;
+
+  const SignupFailure({required this.reason, this.message});
+
+  @override
+  List<Object?> get props => [reason, message];
 }

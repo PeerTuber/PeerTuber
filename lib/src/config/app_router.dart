@@ -14,7 +14,6 @@ class AppRouter {
   AppRouter();
 
   late final GoRouter router = GoRouter(
-    // TODO(mikehuntington): set initial location to login
     initialLocation: '/home',
     routes: <RouteBase>[
       GoRoute(

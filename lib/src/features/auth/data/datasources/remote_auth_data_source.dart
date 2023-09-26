@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:injectable/injectable.dart';
+import 'package:peertuber/src/core/constants/enums.dart';
 import 'package:peertuber/src/core/error/exceptions.dart';
 import 'package:peertuber/src/core/error/failures.dart';
 import 'package:peertuber/src/core/network/cache_client.dart';
@@ -25,7 +25,7 @@ typedef ClientRecord = ({String clientId, String clientSecret});
 
 abstract class RemoteAuthDataSource {
   Stream<AuthStatus> get status;
-  Future<LoggedInUser> get loggedInUser;
+  LoggedInUser get loggedInUser;
   Future<LoggedInUser> login(Username username, Password password);
   Future<void> signup({required LoggedInUser user, required Password password});
   Future<void> logout();
@@ -45,17 +45,13 @@ class RemoteAuthDataSourceImpl implements RemoteAuthDataSource {
   static const clientCacheKey = '__client_cache_key';
 
   @override
-  // TODO(mikehuntington): implement status
   Stream<AuthStatus> get status => throw UnimplementedError();
 
   @override
-  // TODO(mikehuntington): implement currentUser
 
   /// Returns a [Future] that resolves to the currently logged in user.
-  Future<LoggedInUser> get loggedInUser {
-    return Future.delayed(const Duration(seconds: 1), () {
-      return cacheClient.read(userCacheKey) ?? LoggedInUser.empty;
-    });
+  LoggedInUser get loggedInUser {
+    return cacheClient.read(userCacheKey) ?? LoggedInUser.empty;
   }
 
   @override
@@ -65,7 +61,6 @@ class RemoteAuthDataSourceImpl implements RemoteAuthDataSource {
   /// If the client record is not cached, it is fetched from the server and cached.
   /// Returns a [LoggedInUser] object representing the logged in user.
   Future<LoggedInUser> login(Username username, Password password) async {
-    // TODO(mikehuntington): implement login
     ClientRecord? clientRecord = cacheClient.read(clientCacheKey);
 
     // Cache the client record if it is not cached
@@ -90,8 +85,13 @@ class RemoteAuthDataSourceImpl implements RemoteAuthDataSource {
   @override
   Future<void> signup(
       {required LoggedInUser user, required Password password}) async {
-    // TODO(mikehuntington): implement signup
+    // Sign up the user
     await _signUpUser(user: user, password: password);
+
+    // Update the logged in user
+    _updateLoggedInUser(username: user.username, email: user.email);
+
+    // Emit the new authentication status
     _controller.add(AuthStatus.unauthenticated);
   }
 
@@ -121,7 +121,6 @@ class RemoteAuthDataSourceImpl implements RemoteAuthDataSource {
   }
 
   /// Updates the logged-in user.
-  /*
   void _updateLoggedInUser(
       {int? id,
       Username? username,
@@ -141,7 +140,6 @@ class RemoteAuthDataSourceImpl implements RemoteAuthDataSource {
 
     cacheClient.write(key: userCacheKey, value: loggedInUser);
   }
-  */
 
   /// Logs in a user with the provided [clientRecord], [username], and [password].
   ///
@@ -173,7 +171,7 @@ class RemoteAuthDataSourceImpl implements RemoteAuthDataSource {
         },
       );
     } on http.ClientException {
-      throw "Something went wrong";
+      throw ServerException();
     }
 
     if (response.statusCode == 200) {
@@ -189,7 +187,7 @@ class RemoteAuthDataSourceImpl implements RemoteAuthDataSource {
     }
   }
 
-  Future<Either<Failure, void>> _signUpUser(
+  Future<void> _signUpUser(
       {required LoggedInUser user, required Password password}) async {
     // TODO(mikehuntington): remove neovibe.app from url
     const url = 'https://vids.neovibe.app/api/v1/users/register';
@@ -210,25 +208,21 @@ class RemoteAuthDataSourceImpl implements RemoteAuthDataSource {
         },
       );
     } on http.ClientException {
-      return const Left(ServerFailure());
+      throw ServerException();
     }
 
     final Map<String, dynamic> responseJson = jsonDecode(response.body);
     switch (response.statusCode) {
-      case 204:
-        return const Right(null);
       case 400:
-        return const Left(ServerFailure());
+        throw const SignupFailure(reason: SignupFailureReason.unknown);
       case 403:
-        return const Left(ServerFailure());
+        throw SignupFailure(
+            reason: SignupFailureReason.registrationNotEnabled,
+            message: responseJson['error'] as String);
       case 409:
-        return Left(
-          ServerFailure(
-            message: responseJson['error'] as String,
-          ),
-        );
-      default:
-        return const Left(ServerFailure());
+        throw SignupFailure(
+            reason: SignupFailureReason.usernameOrEmailTaken,
+            message: responseJson['error'] as String);
     }
   }
 }

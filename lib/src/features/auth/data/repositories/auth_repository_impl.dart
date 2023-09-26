@@ -1,3 +1,6 @@
+import 'package:dartz/dartz.dart';
+import 'package:peertuber/src/core/error/exceptions.dart';
+import 'package:peertuber/src/core/error/failures.dart';
 import 'package:peertuber/src/features/auth/data/datasources/remote_auth_data_source.dart';
 import 'package:peertuber/src/features/auth/domain/entities/logged_in_user.dart';
 import 'package:peertuber/src/features/auth/domain/repositories/auth_repository.dart';
@@ -16,14 +19,20 @@ class AuthRespositoryImpl implements AuthRepository {
   });
 
   @override
-  Future<LoggedInUser> get loggedInUser => remoteDataSource.loggedInUser;
+  LoggedInUser get loggedInUser => remoteDataSource.loggedInUser;
 
   @override
   Stream<AuthStatus> get status => remoteDataSource.status;
 
   @override
-  Future<LoggedInUser> login(Username username, Password password) {
-    return remoteDataSource.login(username, password);
+  Future<Either<Failure, LoggedInUser>> login(
+      Username username, Password password) async {
+    try {
+      final user = await remoteDataSource.login(username, password);
+      return Right(user);
+    } on ServerException {
+      return const Left(ServerFailure());
+    }
   }
 
   @override
@@ -32,8 +41,13 @@ class AuthRespositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> signup(
-      {required LoggedInUser user, required Password password}) {
-    return remoteDataSource.signup(user: user, password: password);
+  Future<Either<Failure, void>> signup(
+      {required LoggedInUser user, required Password password}) async {
+    try {
+      await remoteDataSource.signup(user: user, password: password);
+      return const Right(null);
+    } on SignupFailure catch (failure) {
+      return Left(failure);
+    }
   }
 }
