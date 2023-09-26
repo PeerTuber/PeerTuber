@@ -30,14 +30,22 @@ class VideoDetailsSlidein extends HookWidget {
           final miniController = context.read<MediaPlayerBloc>().miniController;
           final videoController = context.read<MediaPlayerBloc>().controller;
 
-          return Miniplayer(
-              controller: miniController,
-              minHeight:
-                  (state is MediaPlayerLoaded) ? _playerMinHeight + 4 : 0,
-              maxHeight: MediaQuery.of(context).size.height,
-              elevation: 100,
-              builder: (height, percentage) {
-                if (state is MediaPlayerLoaded) {
+          if (state is MediaPlayerLoaded) {
+            return Miniplayer(
+                controller: miniController,
+                minHeight: _playerMinHeight + 4,
+                maxHeight: MediaQuery.of(context).size.height,
+                elevation: 100,
+                builder: (height, percentage) {
+                  // Let's check if the video is not playing and not paused
+                  // and if the mini player is not expanded, then we expand it.
+                  if (state is! MediaPlayerPlaying &&
+                      state is! MediaPlayerPaused) {
+                    if (percentage == 0) {
+                      miniController.animateToHeight(state: PanelState.MAX);
+                    }
+                  }
+
                   // Check mini player height and set the proper navbar
                   // animation.
                   if (height > _playerMinHeight + 40.0) {
@@ -58,10 +66,10 @@ class VideoDetailsSlidein extends HookWidget {
                       playerState: state,
                     );
                   }
-                } else {
-                  return const SizedBox.shrink();
-                }
-              });
+                });
+          } else {
+            return const SizedBox.shrink();
+          }
         });
   }
 }
