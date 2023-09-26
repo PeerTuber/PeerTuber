@@ -7,7 +7,7 @@ import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class GetVideoDetailsUseCase
-    implements UseCase<Either<Failure, VideoEntity>, VideoParams> {
+    implements UseCase<Future<Either<Failure, VideoEntity>>, VideoParams> {
   final VideoDetailsRepository repository;
 
   GetVideoDetailsUseCase(this.repository);

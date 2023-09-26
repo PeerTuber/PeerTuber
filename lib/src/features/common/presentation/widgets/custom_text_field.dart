@@ -29,6 +29,14 @@ class CustomTextField extends StatelessWidget {
         labelText: labelText,
         errorText: errorText,
         floatingLabelBehavior: FloatingLabelBehavior.never,
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.red, width: 3.0),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.red, width: 1.0),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: Colors.black),
           borderRadius: BorderRadius.circular(10.0),

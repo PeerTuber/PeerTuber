@@ -54,7 +54,7 @@ class VideoModel extends Equatable {
   final ChannelModel? channel;
   final bool? blacklisted;
   final dynamic blacklistedReason;
-  final List<StreamingPlaylistEntity>? streamingPlaylists;
+  final List<StreamingPlaylistModel>? streamingPlaylists;
   final List<dynamic>? files;
   final dynamic support;
   final String? descriptionPath;
@@ -189,9 +189,8 @@ class VideoModel extends Equatable {
       channel: channel!.toEntity(),
       blacklisted: blacklisted,
       blacklistedReason: blacklistedReason,
-      streamingPlaylists: streamingPlaylists
-          ?.map((e) => (e as StreamingPlaylistModel).toEntity())
-          .toList(growable: false),
+      streamingPlaylists:
+          streamingPlaylists?.map((e) => e.toEntity()).toList(growable: false),
       files: files,
       support: support,
       descriptionPath: descriptionPath,
@@ -382,15 +381,32 @@ class LanguageModel extends Equatable {
       };
 }
 
-class StreamingPlaylistModel extends StreamingPlaylistEntity {
-  const StreamingPlaylistModel(
-      {required super.id,
-      required super.type,
-      required super.playlistUrl,
-      required super.segmentsSha256Url,
-      required super.redundancies,
-      required super.files})
-      : super();
+class StreamingPlaylistModel extends Equatable {
+  final int id;
+  final int type;
+  final String playlistUrl;
+  final String segmentsSha256Url;
+  final List<dynamic> redundancies;
+  final List<FileElementModel> files;
+
+  const StreamingPlaylistModel({
+    required this.id,
+    required this.type,
+    required this.playlistUrl,
+    required this.segmentsSha256Url,
+    required this.redundancies,
+    required this.files,
+  });
+
+  @override
+  List<Object?> get props => [
+        id,
+        type,
+        playlistUrl,
+        segmentsSha256Url,
+        redundancies,
+        files,
+      ];
 
   factory StreamingPlaylistModel.fromJson(Map<String, dynamic> json) =>
       StreamingPlaylistModel(
@@ -399,7 +415,7 @@ class StreamingPlaylistModel extends StreamingPlaylistEntity {
         playlistUrl: json["playlistUrl"],
         segmentsSha256Url: json["segmentsSha256Url"],
         redundancies: List<dynamic>.from(json["redundancies"].map((x) => x)),
-        files: List<FileElementEntity>.from(
+        files: List<FileElementModel>.from(
             json["files"].map((x) => FileElementModel.fromJson(x))),
       );
 
@@ -410,9 +426,7 @@ class StreamingPlaylistModel extends StreamingPlaylistEntity {
       playlistUrl: playlistUrl,
       segmentsSha256Url: segmentsSha256Url,
       redundancies: redundancies,
-      files: files
-          .map((file) => (file as FileElementModel).toEntity())
-          .toList(growable: false),
+      files: files.map((file) => file.toEntity()).toList(growable: false),
     );
   }
 
@@ -422,8 +436,7 @@ class StreamingPlaylistModel extends StreamingPlaylistEntity {
         "playlistUrl": playlistUrl,
         "segmentsSha256Url": segmentsSha256Url,
         "redundancies": List<dynamic>.from(redundancies.map((x) => x)),
-        "files": List<dynamic>.from(
-            files.map((x) => (x as FileElementModel).toJson())),
+        "files": List<dynamic>.from(files.map((x) => x.toJson())),
       };
 }
 
