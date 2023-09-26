@@ -10,7 +10,7 @@ class GetAuthStatus implements UseCase<Stream<AuthStatus>, NoParams> {
   GetAuthStatus(this.authRepository);
 
   @override
-  Future<Stream<AuthStatus>> call(NoParams params) async {
+  Stream<AuthStatus> call(NoParams params) {
     return authRepository.status;
   }
 }

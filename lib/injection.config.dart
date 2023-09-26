@@ -18,7 +18,7 @@ import 'package:media_kit/media_kit.dart' as _i10;
 import 'package:media_kit_video/media_kit_video.dart' as _i16;
 import 'package:miniplayer/miniplayer.dart' as _i8;
 
-import 'injection.dart' as _i35;
+import 'injection.dart' as _i36;
 import 'src/core/network/cache_client.dart' as _i3;
 import 'src/core/network/network_info.dart' as _i9;
 import 'src/features/auth/data/datasources/remote_auth_data_source.dart'
@@ -30,6 +30,7 @@ import 'src/features/auth/domain/usecases/get_logged_in_user.dart' as _i23;
 import 'src/features/auth/domain/usecases/login_user.dart' as _i27;
 import 'src/features/auth/domain/usecases/logout_user.dart' as _i28;
 import 'src/features/auth/domain/usecases/signup_user.dart' as _i30;
+import 'src/features/auth/presentation/blocs/auth/auth_bloc.dart' as _i32;
 import 'src/features/common/data/datasources/search_videos_remote_data_source.dart'
     as _i12;
 import 'src/features/common/data/repositories/search_videos_repository_impl.dart'
@@ -40,7 +41,7 @@ import 'src/features/common/domain/usecases/search_videos.dart' as _i15;
 import 'src/features/common/presentation/bloc/instance/instance_cubit.dart'
     as _i6;
 import 'src/features/common/presentation/bloc/media_player/media_player_bloc.dart'
-    as _i34;
+    as _i35;
 import 'src/features/common/presentation/bloc/search_videos/search_videos_bloc.dart'
     as _i29;
 import 'src/features/home/data/datasources/home_videos_remote_data_source.dart'
@@ -49,8 +50,8 @@ import 'src/features/home/data/repositories/home_videos_repository_impl.dart'
     as _i26;
 import 'src/features/home/domain/repositories/home_videos_repository.dart'
     as _i25;
-import 'src/features/home/domain/usecases/get_home_videos.dart' as _i32;
-import 'src/features/home/presentation/bloc/home_bloc.dart' as _i33;
+import 'src/features/home/domain/usecases/get_home_videos.dart' as _i33;
+import 'src/features/home/presentation/bloc/home_bloc.dart' as _i34;
 import 'src/features/video_details/data/datasources/video_details_remote_data_source.dart'
     as _i17;
 import 'src/features/video_details/data/repositories/video_details_repository_impl.dart'
@@ -142,11 +143,16 @@ extension GetItInjectableX on _i1.GetIt {
         gh<_i16.VideoControllerConfiguration>(instanceName: 'Configuration')));
     gh.factory<_i31.VideoDetailsBloc>(() => _i31.VideoDetailsBloc(
         getVideoDetails: gh<_i24.GetVideoDetailsUseCase>()));
-    gh.lazySingleton<_i32.GetHomeVideos>(
-        () => _i32.GetHomeVideos(gh<_i25.HomeVideosRespository>()));
-    gh.factory<_i33.HomeBloc>(
-        () => _i33.HomeBloc(getHomeVideos: gh<_i32.GetHomeVideos>()));
-    gh.factory<_i34.MediaPlayerBloc>(() => _i34.MediaPlayerBloc(
+    gh.factory<_i32.AuthBloc>(() => _i32.AuthBloc(
+          logoutUser: gh<_i28.LogoutUser>(),
+          getAuthStatus: gh<_i22.GetAuthStatus>(),
+          getLoggedInUser: gh<_i23.GetLoggedInUser>(),
+        ));
+    gh.lazySingleton<_i33.GetHomeVideos>(
+        () => _i33.GetHomeVideos(gh<_i25.HomeVideosRespository>()));
+    gh.factory<_i34.HomeBloc>(
+        () => _i34.HomeBloc(getHomeVideos: gh<_i33.GetHomeVideos>()));
+    gh.factory<_i35.MediaPlayerBloc>(() => _i35.MediaPlayerBloc(
           controller: gh<_i16.VideoController>(),
           miniController: gh<_i8.MiniplayerController>(),
         ));
@@ -154,7 +160,7 @@ extension GetItInjectableX on _i1.GetIt {
   }
 }
 
-class _$RegisterModule extends _i35.RegisterModule {
+class _$RegisterModule extends _i36.RegisterModule {
   @override
   _i3.CacheClient get cacheClient => _i3.CacheClient();
   @override

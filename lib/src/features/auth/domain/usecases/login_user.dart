@@ -8,7 +8,7 @@ import 'package:peertuber/src/features/common/domain/usecases/usecase.dart';
 
 @lazySingleton
 class LoginUser
-    implements UseCase<Either<Failure, LoggedInUser>, LoginUserParams> {
+    implements UseCase<Future<Either<Failure, LoggedInUser>>, LoginUserParams> {
   final AuthRepository authRepository;
 
   LoginUser(this.authRepository);
