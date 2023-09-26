@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CustomSliverAppBar extends StatelessWidget {
   const CustomSliverAppBar({super.key});
@@ -14,9 +15,20 @@ class CustomSliverAppBar extends StatelessWidget {
       ),
       title: const Text('PeerTuber'),
       actions: [
-        IconButton(
-            onPressed: () {}, icon: const Icon(Icons.notifications_outlined)),
-        IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.notifications_outlined)),
+            IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
+            IconButton(
+                onPressed: () {
+                  context.go('/login');
+                },
+                icon: const Icon(Icons.person)),
+          ],
+        ),
       ],
     );
   }

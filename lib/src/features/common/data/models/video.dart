@@ -189,9 +189,8 @@ class VideoModel extends Equatable {
       channel: channel!.toEntity(),
       blacklisted: blacklisted,
       blacklistedReason: blacklistedReason,
-      streamingPlaylists: streamingPlaylists
-          ?.map((e) => (e as StreamingPlaylistModel).toEntity())
-          .toList(growable: false),
+      streamingPlaylists:
+          streamingPlaylists?.map((e) => e.toEntity()).toList(growable: false),
       files: files,
       support: support,
       descriptionPath: descriptionPath,
@@ -427,9 +426,7 @@ class StreamingPlaylistModel extends Equatable {
       playlistUrl: playlistUrl,
       segmentsSha256Url: segmentsSha256Url,
       redundancies: redundancies,
-      files: files
-          .map((file) => (file as FileElementModel).toEntity())
-          .toList(growable: false),
+      files: files.map((file) => file.toEntity()).toList(growable: false),
     );
   }
 
@@ -439,8 +436,7 @@ class StreamingPlaylistModel extends Equatable {
         "playlistUrl": playlistUrl,
         "segmentsSha256Url": segmentsSha256Url,
         "redundancies": List<dynamic>.from(redundancies.map((x) => x)),
-        "files": List<dynamic>.from(
-            files.map((x) => (x as FileElementModel).toJson())),
+        "files": List<dynamic>.from(files.map((x) => x.toJson())),
       };
 }
 

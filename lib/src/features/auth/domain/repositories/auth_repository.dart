@@ -1,8 +1,7 @@
 import 'package:dartz/dartz.dart';
+import 'package:peertuber/src/core/constants/enums.dart';
 import 'package:peertuber/src/core/error/failures.dart';
-import 'package:peertuber/src/features/auth/data/datasources/remote_auth_data_source.dart';
 import 'package:peertuber/src/features/auth/domain/entities/logged_in_user.dart';
-import 'package:peertuber/src/features/common/domain/entities/entities.dart';
 
 abstract class AuthRepository {
   Stream<AuthStatus> get status;

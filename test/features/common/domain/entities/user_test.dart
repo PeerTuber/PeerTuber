@@ -1,4 +1,4 @@
-import 'package:peertuber/src/features/common/domain/entities/user.dart';
+import 'package:peertuber/src/features/auth/domain/entities/logged_in_user.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

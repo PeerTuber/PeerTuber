@@ -7,7 +7,7 @@ import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class GetHomeVideos
-    implements UseCase<Either<Failure, List<VideoEntity>>, NoParams> {
+    implements UseCase<Future<Either<Failure, List<VideoEntity>>>, NoParams> {
   final HomeVideosRespository repository;
 
   GetHomeVideos(this.repository);

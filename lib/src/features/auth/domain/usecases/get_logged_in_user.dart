@@ -4,7 +4,7 @@ import 'package:peertuber/src/features/auth/domain/repositories/auth_repository.
 import 'package:peertuber/src/features/common/domain/usecases/usecase.dart';
 
 @lazySingleton
-class GetLoggedInUser implements UseCase<LoggedInUser, NoParams> {
+class GetLoggedInUser implements UseCase<Future<LoggedInUser>, NoParams> {
   final AuthRepository authRepository;
 
   GetLoggedInUser(this.authRepository);

@@ -7,7 +7,8 @@ import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class SearchVideosUseCase
-    implements UseCase<Either<Failure, List<VideoEntity>>, SearchParams> {
+    implements
+        UseCase<Future<Either<Failure, List<VideoEntity>>>, SearchParams> {
   final SearchVideosRepository repository;
 
   SearchVideosUseCase(this.repository);
