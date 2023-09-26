@@ -6,7 +6,8 @@ import 'package:peertuber/src/features/video_details/domain/repositories/video_d
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
-class GetVideoDetailsUseCase implements UseCase<VideoEntity, VideoParams> {
+class GetVideoDetailsUseCase
+    implements UseCase<Either<Failure, VideoEntity>, VideoParams> {
   final VideoDetailsRepository repository;
 
   GetVideoDetailsUseCase(this.repository);

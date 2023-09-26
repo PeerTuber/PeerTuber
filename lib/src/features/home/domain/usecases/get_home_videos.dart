@@ -6,7 +6,8 @@ import 'package:peertuber/src/features/home/domain/repositories/home_videos_repo
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
-class GetHomeVideos implements UseCase<List<VideoEntity>, NoParams> {
+class GetHomeVideos
+    implements UseCase<Either<Failure, List<VideoEntity>>, NoParams> {
   final HomeVideosRespository repository;
 
   GetHomeVideos(this.repository);
