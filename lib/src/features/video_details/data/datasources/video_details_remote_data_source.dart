@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:peertuber/src/core/error/exceptions.dart';
+import 'package:peertuber/src/core/network/cache_client.dart';
 import 'package:peertuber/src/features/common/data/models/video.dart';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
@@ -17,10 +18,17 @@ abstract class VideoDetailsRemoteDataSource {
 
 @LazySingleton(as: VideoDetailsRemoteDataSource)
 class VideoDetailsRemoteDataSourceImpl implements VideoDetailsRemoteDataSource {
+  final CacheClient cacheClient;
   final http.Client client;
   final _controller = StreamController<VideoEntity>();
 
-  VideoDetailsRemoteDataSourceImpl({required this.client});
+  VideoDetailsRemoteDataSourceImpl({
+    required this.cacheClient,
+    required this.client,
+  });
+
+  // Cache key for the fetched video details
+  static const videoDetailsCacheKey = '__video_details_cache_key';
 
   @override
   Stream<VideoEntity?> get videoDetails async* {
@@ -30,6 +38,13 @@ class VideoDetailsRemoteDataSourceImpl implements VideoDetailsRemoteDataSource {
 
   @override
   Future<VideoModel> getVideoDetailsById(int id) async {
+    VideoModel? cachedVideo = cacheClient.read('${videoDetailsCacheKey}_$id');
+
+    // Check if the video details are cached and return them if they are
+    if (cachedVideo != null) {
+      return cachedVideo;
+    }
+
     // TODO(mikehuntington): remove neovibe.app from url
     final url = 'https://vids.neovibe.app/api/v1/videos/$id';
     final uri = Uri.parse(url);
@@ -45,6 +60,7 @@ class VideoDetailsRemoteDataSourceImpl implements VideoDetailsRemoteDataSource {
     if (response.statusCode == 200) {
       final video = videoFromJson(response.body);
       _controller.add(video.toEntity());
+      cacheClient.write(key: '${videoDetailsCacheKey}_$id', value: video);
       return video;
     } else {
       throw ServerException();
@@ -54,6 +70,14 @@ class VideoDetailsRemoteDataSourceImpl implements VideoDetailsRemoteDataSource {
   @override
   Future<VideoModel> getVideoDetailsByUrl(
       String videoUrl, String videoUuid) async {
+    VideoModel? cachedVideo =
+        cacheClient.read('${videoDetailsCacheKey}_$videoUuid');
+
+    // Check if the video details are cached and return them if they are
+    if (cachedVideo != null) {
+      return cachedVideo;
+    }
+
     final videoUri = Uri.parse(videoUrl);
     final url = '${videoUri.origin}/api/v1/videos/$videoUuid';
     final uri = Uri.parse(url);
@@ -70,6 +94,8 @@ class VideoDetailsRemoteDataSourceImpl implements VideoDetailsRemoteDataSource {
       VideoModel video = VideoModel.withRemoteHost(
           videoFromJson(response.body), videoUri.origin);
       _controller.add(video.toEntity());
+      cacheClient.write(
+          key: '${videoDetailsCacheKey}_$videoUuid', value: video);
       return video;
     } else {
       throw ServerException();

@@ -15,6 +15,7 @@ class SearchVideosUseCase
 
   @override
   Future<Either<Failure, List<VideoEntity>>> call(SearchParams params) async {
-    return await repository.searchVideos(params.searchData);
+    return await repository.searchVideos(
+        searchData: params.searchData, videoId: params.videoId);
   }
 }

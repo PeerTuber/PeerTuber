@@ -21,8 +21,10 @@ class SearchVideosBloc extends Bloc<SearchVideosEvent, SearchVideosState> {
   void _onPerformSearchVideos(
       PerformSearchVideosEvent event, Emitter<SearchVideosState> emit) async {
     emit(SearchVideosLoading());
-    final videos =
-        await searchVideos(SearchParams(searchData: event.searchData));
+
+    final videoId = event.video?.id;
+    final videos = await searchVideos(
+        SearchParams(searchData: event.searchData, videoId: videoId));
 
     videos.fold(
       (failure) => emit(const SearchVideosError(message: 'There was an error')),

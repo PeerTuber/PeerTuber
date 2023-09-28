@@ -21,11 +21,12 @@ class SearchVideosRepositoryImpl implements SearchVideosRepository {
 
   @override
   Future<Either<Failure, List<VideoEntity>>> searchVideos(
-      SearchDataEntity searchData) async {
+      {required SearchDataEntity searchData, int? videoId}) async {
     if (await networkInfo.isConnected) {
       try {
-        final remoteVideos = await remoteDataSource
-            .searchVideos(SearchDataModel.fromEntity(searchData));
+        final remoteVideos = await remoteDataSource.searchVideos(
+            searchData: SearchDataModel.fromEntity(searchData),
+            videoId: videoId);
         return Right(remoteVideos.map((e) => e.toEntity()).toList());
       } on ServerException {
         return const Left(ServerFailure());

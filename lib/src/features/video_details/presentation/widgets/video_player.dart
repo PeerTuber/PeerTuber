@@ -170,7 +170,6 @@ class _VideoWidget extends StatelessWidget {
 
         return Video(
             controller: mediaPlayer.controller,
-            //controls: MaterialVideoControls,
             controls: (miniPlayerPercentage == 1)
                 ? MaterialVideoControls
                 : NoVideoControls,
