@@ -16,7 +16,8 @@ part 'media_player_state.dart';
 class MediaPlayerBloc extends Bloc<MediaPlayerEvent, MediaPlayerState> {
   final VideoController controller;
   final MiniplayerController miniController;
-  late Stream<bool> playerStream;
+  late StreamSubscription playerStream;
+  late StreamSubscription playerPositionStream;
 
   MediaPlayerBloc({required this.controller, required this.miniController})
       : super(MediaPlayerNotLoaded()) {
@@ -27,9 +28,35 @@ class MediaPlayerBloc extends Bloc<MediaPlayerEvent, MediaPlayerState> {
     on<StopMedia>(_onStopMedia);
     on<EndMedia>(_onEndMedia);
     on<MinimizePlayer>(_onMinimizePlayer);
-    on<UpdateSuggestedVideos>(_onUpdateSuggestedVideos);
+    on<UpdatePostion>(_onUpdatePosition);
 
-    playerStream = controller.player.stream.playing;
+    playerStream = controller.player.stream.playing
+        .asBroadcastStream()
+        .listen((bool isPlaying) {
+      if (isPlaying) {
+        // Check if the video is paused and if so, play it.
+        if ([MediaPlayerPaused].contains(state.runtimeType)) {
+          add(PlayMedia(video: (state as MediaPlayerPaused).video));
+        }
+      } else {
+        // Check if the video is playing and if so, pause it.
+        if ([MediaPlayerPlaying].contains(state.runtimeType)) {
+          if (controller.player.state.position.inSeconds > 0) {
+            add(PauseMedia(video: (state as MediaPlayerPlaying).video));
+          }
+        }
+      }
+    });
+
+    playerPositionStream =
+        controller.player.stream.position.listen((Duration position) {
+      if (state is MediaPlayerPlaying) {
+        if (position.inSeconds > 0) {
+          add(UpdatePostion(position: position));
+        }
+      }
+      //add(UpdatePostion(position: position));
+    });
   }
 
   void _onLoadMedia(LoadMedia event, Emitter<MediaPlayerState> emit) {
@@ -38,16 +65,12 @@ class MediaPlayerBloc extends Bloc<MediaPlayerEvent, MediaPlayerState> {
       // Check if the video playing is the same one being loaded
       if (state is MediaPlayerPlaying &&
           event.video.id == (state as MediaPlayerPlaying).video.id) {
-        // Maximize the miniPlayer
-        miniController.animateToHeight(state: PanelState.MAX);
-        // Continue playing the video that was previously loaded
         controller.player.play();
         return;
       }
     }
 
     emit(MediaPlayerLoaded(video: event.video));
-    miniController.animateToHeight(state: PanelState.MAX);
   }
 
   void _onPlayMedia(PlayMedia event, Emitter<MediaPlayerState> emit) async {
@@ -55,19 +78,27 @@ class MediaPlayerBloc extends Bloc<MediaPlayerEvent, MediaPlayerState> {
     if (!controller.player.state.playing &&
         state is! MediaPlayerPlaying &&
         state is! MediaPlayerPaused) {
-      await controller.player.open(
-          Media(event.video.streamingPlaylists![0].playlistUrl),
-          play: true);
+      if (event.video.streamingPlaylists!.isNotEmpty) {
+        await controller.player.open(
+            Media(event.video.streamingPlaylists![0].playlistUrl),
+            play: true);
+      } else {
+        return;
+      }
     }
     // Media is loaded and playing / paused
     else if (state is MediaPlayerPlaying || state is MediaPlayerPaused) {
-      // check if the videos are the same
-      if (event.video != (state as MediaPlayerLoaded).video) {
-        // Unload the playing media
-        emit(MediaPlayerNotLoaded());
+      final video = (state is MediaPlayerPlaying)
+          ? (state as MediaPlayerPlaying).video
+          : (state as MediaPlayerPaused).video;
 
-        // Load the new media
-        add(LoadMedia(video: event.video));
+      // check if the videos are the same
+      if (event.video.id != video.id) {
+        controller.player.stop();
+        // The videos are different, load the new video
+        await controller.player.open(
+            Media(event.video.streamingPlaylists![0].playlistUrl),
+            play: true);
 
         return;
       } else {
@@ -110,12 +141,18 @@ class MediaPlayerBloc extends Bloc<MediaPlayerEvent, MediaPlayerState> {
     miniController.animateToHeight(state: PanelState.MIN);
   }
 
-  void _onUpdateSuggestedVideos(
-      UpdateSuggestedVideos event, Emitter<MediaPlayerState> emit) {
-    if (state is MediaPlayerLoaded) {
-      emit(MediaPlayerLoaded(
-          video: (state as MediaPlayerLoaded).video,
-          videoSuggestions: event.videos));
+  void _onUpdatePosition(UpdatePostion event, Emitter<MediaPlayerState> emit) {
+    if (state is MediaPlayerPlaying) {
+      emit(MediaPlayerPlaying(
+          video: (state as MediaPlayerPlaying).video,
+          seekPosition: event.position));
     }
+  }
+
+  @override
+  Future<void> close() {
+    playerStream.cancel();
+    playerPositionStream.cancel();
+    return super.close();
   }
 }

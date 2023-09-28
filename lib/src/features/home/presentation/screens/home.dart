@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:peertuber/injection.dart';
+import 'package:peertuber/src/features/common/presentation/bloc/media_player/media_player_bloc.dart';
 import 'package:peertuber/src/features/common/presentation/widgets/widgets.dart';
 import 'package:peertuber/src/features/home/presentation/bloc/home_bloc.dart';
 
@@ -34,9 +35,13 @@ class HomeScreen extends StatelessWidget {
                       (context, index) {
                         final video = state.videoList[index];
                         return VideoCard(
-                          video: video,
-                          hasPadding: false,
-                        );
+                            video: video,
+                            hasPadding: false,
+                            onTap: (video) {
+                              context.read<MediaPlayerBloc>().add(
+                                    LoadMedia(video: video),
+                                  );
+                            });
                       },
                       childCount: state.videoList.length,
                     ),

@@ -16,4 +16,13 @@ class GetVideoDetailsEvent extends VideoDetailsEvent {
   List<Object> get props => [video];
 }
 
+class OnVideoDetails extends VideoDetailsEvent {
+  final VideoEntity video;
+
+  const OnVideoDetails({required this.video});
+
+  @override
+  List<Object> get props => [video];
+}
+
 class ReloadVideoDetails extends VideoDetailsEvent {}
