@@ -18,11 +18,12 @@ class LoadMedia extends MediaPlayerEvent {
 
 class PlayMedia extends MediaPlayerEvent {
   final VideoEntity video;
+  final bool isStateChange;
 
-  const PlayMedia({required this.video});
+  const PlayMedia({required this.video, this.isStateChange = true});
 
   @override
-  List<Object> get props => [video];
+  List<Object> get props => [video, isStateChange];
 }
 
 class PauseMedia extends MediaPlayerEvent {
@@ -32,6 +33,15 @@ class PauseMedia extends MediaPlayerEvent {
 
   @override
   List<Object> get props => [video];
+}
+
+class UpdatePostion extends MediaPlayerEvent {
+  final Duration position;
+
+  const UpdatePostion({required this.position});
+
+  @override
+  List<Object> get props => [position];
 }
 
 class StopMedia extends MediaPlayerEvent {}
@@ -46,6 +56,8 @@ class EndMedia extends MediaPlayerEvent {
 }
 
 class MinimizePlayer extends MediaPlayerEvent {}
+
+class MaximizePlayer extends MediaPlayerEvent {}
 
 class UpdateSuggestedVideos extends MediaPlayerEvent {
   final List<VideoEntity> videos;

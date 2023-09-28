@@ -20,10 +20,11 @@ final class MediaPlayerLoaded extends MediaPlayerState {
   List<Object> get props => [video, videoSuggestions];
 }
 
-final class MediaPlayerPlaying extends MediaPlayerLoaded {
+final class MediaPlayerPlaying extends MediaPlayerState {
+  final VideoEntity video;
   final Duration seekPosition;
 
-  const MediaPlayerPlaying({required super.video, required this.seekPosition});
+  const MediaPlayerPlaying({required this.video, required this.seekPosition});
 
   @override
   List<Object> get props => [seekPosition, video];
@@ -36,8 +37,10 @@ final class MediaPlayerBuffering extends MediaPlayerLoaded {
   List<Object> get props => [video];
 }
 
-final class MediaPlayerPaused extends MediaPlayerLoaded {
-  const MediaPlayerPaused({required super.video});
+final class MediaPlayerPaused extends MediaPlayerState {
+  final VideoEntity video;
+
+  const MediaPlayerPaused({required this.video});
 
   @override
   List<Object> get props => [video];
@@ -48,4 +51,11 @@ final class MediaPlayerEnded extends MediaPlayerLoaded {
 
   @override
   List<Object> get props => [video];
+}
+
+final class MediaPlayerResizing extends MediaPlayerState {
+  const MediaPlayerResizing();
+
+  @override
+  List<Object> get props => [];
 }

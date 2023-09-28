@@ -5,13 +5,14 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:peertuber/src/features/common/data/models/video.dart';
 import 'package:peertuber/src/features/common/domain/entities/video.dart';
 import 'package:peertuber/src/features/common/presentation/bloc/instance/instance_cubit.dart';
-import 'package:peertuber/src/features/common/presentation/bloc/media_player/media_player_bloc.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class VideoCard extends HookWidget {
   final VideoEntity video;
   final bool hasPadding;
-  const VideoCard({Key? key, required this.video, required this.hasPadding})
+  final Function(VideoEntity)? onTap;
+  const VideoCard(
+      {Key? key, required this.video, required this.hasPadding, this.onTap})
       : super(key: key);
 
   @override
@@ -39,7 +40,9 @@ class VideoCard extends HookWidget {
 
     return GestureDetector(
       onTap: () {
-        context.read<MediaPlayerBloc>().add(LoadMedia(video: video));
+        if (onTap != null) {
+          onTap!(video);
+        }
       },
       child: Padding(
         padding: const EdgeInsets.fromLTRB(0, 12.0, 0, 12.0),

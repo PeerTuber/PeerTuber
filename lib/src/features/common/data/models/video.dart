@@ -218,7 +218,7 @@ class VideoModel extends Equatable {
         nsfw: video.nsfw,
         truncatedDescription: video.truncatedDescription,
         description: video.description,
-        isLocal: video.isLocal,
+        isLocal: null,
         duration: video.duration,
         views: video.views,
         viewers: video.viewers,

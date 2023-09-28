@@ -18,6 +18,9 @@ class VideoDetailsRepositoryImpl implements VideoDetailsRepository {
   });
 
   @override
+  Stream<VideoEntity?> get videoDetails => remoteDataSource.videoDetails;
+
+  @override
   Future<Either<Failure, VideoEntity>> getVideoDetailsById(int id) async {
     if (await networkInfo.isConnected) {
       try {

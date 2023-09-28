@@ -4,6 +4,7 @@ import 'package:peertuber/src/features/common/domain/entities/video.dart';
 import 'package:peertuber/src/features/common/domain/usecases/usecase.dart';
 import 'package:peertuber/src/features/video_details/domain/usecases/get_video_details.dart';
 import 'package:injectable/injectable.dart';
+import 'package:peertuber/src/features/video_details/domain/usecases/get_video_details_stream.dart';
 
 part 'video_details_event.dart';
 part 'video_details_state.dart';
@@ -11,10 +12,15 @@ part 'video_details_state.dart';
 @injectable
 class VideoDetailsBloc extends Bloc<VideoDetailsEvent, VideoDetailsState> {
   final GetVideoDetailsUseCase getVideoDetails;
-  VideoDetailsBloc({required this.getVideoDetails})
-      : super(VideoDetailsLoading()) {
+  final GetVideoDetailsStreamUseCase getVideoDetailsStream;
+
+  VideoDetailsBloc({
+    required this.getVideoDetails,
+    required this.getVideoDetailsStream,
+  }) : super(VideoDetailsLoading()) {
     on<GetVideoDetailsEvent>(_onGetVideoDetails);
     on<ReloadVideoDetails>(_onReloadVideoDetails);
+    on<OnVideoDetails>(_onVideoDetails);
   }
 
   void _onGetVideoDetails(
@@ -23,8 +29,15 @@ class VideoDetailsBloc extends Bloc<VideoDetailsEvent, VideoDetailsState> {
 
     video.fold(
       (failure) => emit(const VideoDetailsError(message: 'There was an error')),
-      (video) => emit(VideoDetailsLoaded(video: video)),
+      (video) {
+        emit(VideoDetailsLoaded(video: video));
+      },
     );
+  }
+
+  void _onVideoDetails(
+      OnVideoDetails event, Emitter<VideoDetailsState> emit) async {
+    VideoDetailsLoaded(video: event.video);
   }
 
   void _onReloadVideoDetails(
