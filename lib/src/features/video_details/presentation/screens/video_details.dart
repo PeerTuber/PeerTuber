@@ -23,98 +23,100 @@ class VideoDetails extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-            create: (_) => getIt<VideoDetailsBloc>()
-              ..add(GetVideoDetailsEvent(video: video!))),
-        BlocProvider(create: (_) => getIt<SearchVideosBloc>()),
-      ],
-      child: Container(
-        color: Colors.black,
-        child: SafeArea(
-          bottom: false,
-          top: (miniPlayerPercentage < 0.9) ? false : true,
-          //!-- Video loaded listener
-          child: BlocListener<MediaPlayerBloc, MediaPlayerState>(
-            listenWhen: (previous, current) {
-              if (current is MediaPlayerLoaded) {
-                return current.video.id != video?.id;
-              }
-
-              return false;
-            },
-            listener: (context, state) {
-              context.read<VideoDetailsBloc>().add(GetVideoDetailsEvent(
-                  video: (state as MediaPlayerLoaded).video));
-            },
-            child: Column(
-              children: [
-                //!-- Video details listener
-                BlocListener<VideoDetailsBloc, VideoDetailsState>(
-                  listenWhen: (previous, current) => previous != current,
-                  listener: (context, state) {
-                    if (state is VideoDetailsLoaded) {
-                      final data = SearchDataEntity(
-                          // TODO(mikehuntington): remove neovibe.app hardcoded url
-                          instanceHost: 'https://vids.neovibe.app',
-                          search: '',
-                          tagsOfOne: state.video.tags);
-
-                      // Search for related videos
-                      context
-                          .read<SearchVideosBloc>()
-                          .add(PerformSearchVideosEvent(searchData: data));
-                      context
-                          .read<MediaPlayerBloc>()
-                          .add(PlayMedia(video: state.video));
-                      context
-                          .read<MediaPlayerBloc>()
-                          .miniController
-                          .animateToHeight(state: PanelState.MAX);
+    // -- Hide default layout when in landscape mode.
+    return (MediaQuery.of(context).orientation == Orientation.landscape)
+        ? const SizedBox.shrink()
+        : MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                  create: (_) => getIt<VideoDetailsBloc>()
+                    ..add(GetVideoDetailsEvent(video: video!))),
+              BlocProvider(create: (_) => getIt<SearchVideosBloc>()),
+            ],
+            child: Container(
+              color: Colors.black,
+              child: SafeArea(
+                bottom: false,
+                top: (miniPlayerPercentage < 0.9) ? false : true,
+                //!-- Video loaded listener
+                child: BlocListener<MediaPlayerBloc, MediaPlayerState>(
+                  listenWhen: (previous, current) {
+                    if (current is MediaPlayerLoaded) {
+                      return current.video.id != video?.id;
                     }
-                  },
-                  child: BlocBuilder<VideoDetailsBloc, VideoDetailsState>(
-                    buildWhen: (previous, current) {
-                      if (current is VideoDetailsLoaded) {
-                        if (previous is VideoDetailsLoaded) {
-                          return current.video.id != previous.video.id;
-                        }
-                      }
 
-                      return false;
-                    },
-                    builder: (context, state) {
-                      return VideoPlayer(
-                        miniPlayerPercentage: miniPlayerPercentage,
-                        video: (state is VideoDetailsLoaded)
-                            ? state.video
-                            : (playerState as MediaPlayerLoaded).video,
-                      );
-                    },
+                    return false;
+                  },
+                  listener: (context, state) {
+                    context.read<VideoDetailsBloc>().add(GetVideoDetailsEvent(
+                        video: (state as MediaPlayerLoaded).video));
+                  },
+                  child: Column(
+                    children: [
+                      //!-- Video details listener
+                      BlocListener<VideoDetailsBloc, VideoDetailsState>(
+                        listenWhen: (previous, current) => previous != current,
+                        listener: (context, state) {
+                          if (state is VideoDetailsLoaded) {
+                            final data = SearchDataEntity(
+                                // TODO(mikehuntington): remove neovibe.app hardcoded url
+                                instanceHost: 'https://vids.neovibe.app',
+                                search: '',
+                                tagsOfOne: state.video.tags);
+
+                            // Search for related videos
+                            context.read<SearchVideosBloc>().add(
+                                PerformSearchVideosEvent(searchData: data));
+                            context
+                                .read<MediaPlayerBloc>()
+                                .add(PlayMedia(video: state.video));
+                            context
+                                .read<MediaPlayerBloc>()
+                                .miniController
+                                .animateToHeight(state: PanelState.MAX);
+                          }
+                        },
+                        child: BlocBuilder<VideoDetailsBloc, VideoDetailsState>(
+                          buildWhen: (previous, current) {
+                            if (current is VideoDetailsLoaded) {
+                              if (previous is VideoDetailsLoaded) {
+                                return current.video.id != previous.video.id;
+                              }
+                            }
+
+                            return false;
+                          },
+                          builder: (context, state) {
+                            return VideoPlayer(
+                              miniPlayerPercentage: miniPlayerPercentage,
+                              video: (state is VideoDetailsLoaded)
+                                  ? state.video
+                                  : (playerState as MediaPlayerLoaded).video,
+                            );
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: BlocBuilder<VideoDetailsBloc, VideoDetailsState>(
+                          buildWhen: (previous, current) =>
+                              current is VideoDetailsLoaded,
+                          builder: (context, state) {
+                            if (state is VideoDetailsLoaded) {
+                              return VideoSearchResults(
+                                miniPlayerPercentage: miniPlayerPercentage,
+                                videoDetail: state.video,
+                              );
+                            } else {
+                              return const SizedBox.shrink();
+                            }
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                Expanded(
-                  child: BlocBuilder<VideoDetailsBloc, VideoDetailsState>(
-                    buildWhen: (previous, current) =>
-                        current is VideoDetailsLoaded,
-                    builder: (context, state) {
-                      if (state is VideoDetailsLoaded) {
-                        return VideoSearchResults(
-                          miniPlayerPercentage: miniPlayerPercentage,
-                          videoDetail: state.video,
-                        );
-                      } else {
-                        return const SizedBox.shrink();
-                      }
-                    },
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
-    );
+          );
   }
 }
