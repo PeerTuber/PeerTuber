@@ -34,6 +34,8 @@ SearchDataModel _$SearchDataModelFromJson(Map<String, dynamic> json) =>
       tagsOfOne: (json['tagsOfOne'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
+      targetVideoId: json['targetVideoId'] as int?,
+      targetVideoUuid: json['targetVideoUuid'] as String?,
     );
 
 Map<String, dynamic> _$SearchDataModelToJson(SearchDataModel instance) =>
@@ -53,6 +55,8 @@ Map<String, dynamic> _$SearchDataModelToJson(SearchDataModel instance) =>
       'tagsOfAll': instance.tagsOfAll,
       'tagsOfOne': instance.tagsOfOne,
       'sort': _$SortTypeEnumMap[instance.sort],
+      'targetVideoId': instance.targetVideoId,
+      'targetVideoUuid': instance.targetVideoUuid,
     };
 
 const _$SearchTargetTypeEnumMap = {

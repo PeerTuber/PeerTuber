@@ -24,8 +24,9 @@ class NumberParam extends Params {
 
 class SearchParams extends Params {
   final SearchDataEntity searchData;
+  final int? videoId;
 
-  SearchParams({required this.searchData});
+  SearchParams({required this.searchData, this.videoId});
 
   @override
   List<dynamic> get props => [searchData];

@@ -6,23 +6,25 @@ part 'search_data.g.dart';
 
 @JsonSerializable()
 class SearchDataModel extends SearchDataEntity {
-  const SearchDataModel(
-      {required super.instanceHost,
-      required super.search,
-      super.count,
-      super.durationMax,
-      super.durationMin,
-      super.endDate,
-      super.excludeAlreadyWatched,
-      super.nsfw,
-      super.searchTarget,
-      super.skipCount,
-      super.sort,
-      super.start,
-      super.startDate,
-      super.tagsOfAll,
-      super.tagsOfOne})
-      : super();
+  const SearchDataModel({
+    required super.instanceHost,
+    required super.search,
+    super.count,
+    super.durationMax,
+    super.durationMin,
+    super.endDate,
+    super.excludeAlreadyWatched,
+    super.nsfw,
+    super.searchTarget,
+    super.skipCount,
+    super.sort,
+    super.start,
+    super.startDate,
+    super.tagsOfAll,
+    super.tagsOfOne,
+    super.targetVideoId,
+    super.targetVideoUuid,
+  }) : super();
 
   factory SearchDataModel.fromEntity(SearchDataEntity entity) {
     return SearchDataModel(
@@ -41,6 +43,8 @@ class SearchDataModel extends SearchDataEntity {
       startDate: entity.startDate,
       tagsOfAll: entity.tagsOfAll,
       tagsOfOne: entity.tagsOfOne,
+      targetVideoId: entity.targetVideoId,
+      targetVideoUuid: entity.targetVideoUuid,
     );
   }
 

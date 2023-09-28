@@ -5,5 +5,5 @@ import 'package:peertuber/src/core/error/failures.dart';
 
 abstract class SearchVideosRepository {
   Future<Either<Failure, List<VideoEntity>>> searchVideos(
-      SearchDataEntity searchData);
+      {required SearchDataEntity searchData, int? videoId});
 }

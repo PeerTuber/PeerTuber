@@ -66,7 +66,8 @@ class VideoDetails extends HookWidget {
 
                             // Search for related videos
                             context.read<SearchVideosBloc>().add(
-                                PerformSearchVideosEvent(searchData: data));
+                                PerformSearchVideosEvent(
+                                    searchData: data, video: state.video));
                             context
                                 .read<MediaPlayerBloc>()
                                 .add(PlayMedia(video: state.video));

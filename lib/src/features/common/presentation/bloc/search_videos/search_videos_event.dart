@@ -9,7 +9,12 @@ sealed class SearchVideosEvent extends Equatable {
 
 class PerformSearchVideosEvent extends SearchVideosEvent {
   final SearchDataEntity searchData;
-  const PerformSearchVideosEvent({required this.searchData});
+  final VideoEntity? video;
+
+  const PerformSearchVideosEvent({
+    required this.searchData,
+    this.video,
+  });
 
   @override
   List<Object> get props => [searchData];

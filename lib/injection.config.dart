@@ -98,7 +98,10 @@ extension GetItInjectableX on _i1.GetIt {
               httpClient: gh<_i4.Client>(),
             ));
     gh.lazySingleton<_i12.SearchVideosRemoteDataSource>(
-        () => _i12.SearchVideosRemoteDataSourceImpl(client: gh<_i4.Client>()));
+        () => _i12.SearchVideosRemoteDataSourceImpl(
+              cacheClient: gh<_i3.CacheClient>(),
+              client: gh<_i4.Client>(),
+            ));
     gh.lazySingleton<_i13.SearchVideosRepository>(
         () => _i14.SearchVideosRepositoryImpl(
               remoteDataSource: gh<_i12.SearchVideosRemoteDataSource>(),
@@ -111,7 +114,10 @@ extension GetItInjectableX on _i1.GetIt {
       instanceName: 'Configuration',
     );
     gh.lazySingleton<_i17.VideoDetailsRemoteDataSource>(
-        () => _i17.VideoDetailsRemoteDataSourceImpl(client: gh<_i4.Client>()));
+        () => _i17.VideoDetailsRemoteDataSourceImpl(
+              cacheClient: gh<_i3.CacheClient>(),
+              client: gh<_i4.Client>(),
+            ));
     gh.lazySingleton<_i18.VideoDetailsRepository>(
         () => _i19.VideoDetailsRepositoryImpl(
               remoteDataSource: gh<_i17.VideoDetailsRemoteDataSource>(),
