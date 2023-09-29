@@ -24,19 +24,24 @@ class VideoPlayer extends StatelessWidget {
           children: [
             Row(
               children: [
-                SizedBox(
-                  width: max(
-                      MediaQuery.of(context).size.width * miniPlayerPercentage,
-                      100),
-                  height: max(
-                      (MediaQuery.of(context).size.width * 9.0 / 16.0) *
-                          miniPlayerPercentage,
-                      60),
+                Visibility(
+                  visible: (MediaQuery.of(context).orientation ==
+                      Orientation.portrait),
+                  child: SizedBox(
+                    width: max(
+                        MediaQuery.of(context).size.width *
+                            miniPlayerPercentage,
+                        100),
+                    height: max(
+                        (MediaQuery.of(context).size.width * 9.0 / 16.0) *
+                            miniPlayerPercentage,
+                        60),
 
-                  // -- Video widget to display video output.
-                  child: _VideoWidget(
-                    video: video,
-                    miniPlayerPercentage: miniPlayerPercentage,
+                    // -- Video widget to display video output.
+                    child: _VideoWidget(
+                      video: video,
+                      miniPlayerPercentage: miniPlayerPercentage,
+                    ),
                   ),
                 ),
                 Expanded(
