@@ -28,27 +28,32 @@ class VideoSearchResults extends StatelessWidget {
 
         return Container(
           color: Colors.black,
-          child: ListView.builder(
-              itemCount: state.videos.length + 2,
-              itemBuilder: (BuildContext conext, int index) {
-                if (index == 0) {
-                  return SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: ((1 - miniPlayerPercentage) * 300),
-                  );
-                } else if (index == 1) {
-                  return VideoInfo(video: videoDetail);
-                } else {
-                  return VideoCard(
-                      video: state.videos[index - 2],
-                      hasPadding: true,
-                      onTap: (video) {
-                        context.read<MediaPlayerBloc>().add(LoadMedia(
-                              video: video,
-                            ));
-                      });
-                }
-              }),
+          child: Visibility(
+            maintainState: false,
+            visible:
+                (MediaQuery.of(context).orientation == Orientation.portrait),
+            child: ListView.builder(
+                itemCount: state.videos.length + 2,
+                itemBuilder: (BuildContext conext, int index) {
+                  if (index == 0) {
+                    return SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: ((1 - miniPlayerPercentage) * 300),
+                    );
+                  } else if (index == 1) {
+                    return VideoInfo(video: videoDetail);
+                  } else {
+                    return VideoCard(
+                        video: state.videos[index - 2],
+                        hasPadding: true,
+                        onTap: (video) {
+                          context.read<MediaPlayerBloc>().add(LoadMedia(
+                                video: video,
+                              ));
+                        });
+                  }
+                }),
+          ),
         );
       },
     );

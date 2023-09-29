@@ -65,9 +65,7 @@ class SearchVideosRemoteDataSourceImpl implements SearchVideosRemoteDataSource {
         final jsonString = jsonEncode(e);
         return videoFromJson(jsonString);
       }).toList()
-        ..removeWhere((video) =>
-            video.id == searchData.targetVideoId ||
-            video.uuid == searchData.targetVideoUuid);
+        ..removeWhere((video) => video.id == videoId);
 
       // Add the videos to the cache
       cacheClient.write(key: '${videoSearchCacheKey}_$videoId', value: videos);
