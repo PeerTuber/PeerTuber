@@ -34,3 +34,8 @@ enum LoginFailureReason {
   tokenExpired,
   clientKeyError,
 }
+
+enum AvatarTarget {
+  account,
+  channel,
+}

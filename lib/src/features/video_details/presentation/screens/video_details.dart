@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:miniplayer/miniplayer.dart';
 import 'package:peertuber/injection.dart';
 import 'package:peertuber/src/features/common/domain/entities/search_data.dart';
 import 'package:peertuber/src/features/common/domain/entities/video.dart';
@@ -68,10 +67,6 @@ class VideoDetails extends StatelessWidget {
                       context
                           .read<MediaPlayerBloc>()
                           .add(PlayMedia(video: state.video));
-                      context
-                          .read<MediaPlayerBloc>()
-                          .miniController
-                          .animateToHeight(state: PanelState.MAX);
                     }
                   },
                   child: BlocBuilder<VideoDetailsBloc, VideoDetailsState>(

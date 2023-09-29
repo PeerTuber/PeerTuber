@@ -28,6 +28,7 @@ class MediaPlayerBloc extends Bloc<MediaPlayerEvent, MediaPlayerState> {
     on<StopMedia>(_onStopMedia);
     on<EndMedia>(_onEndMedia);
     on<MinimizePlayer>(_onMinimizePlayer);
+    on<MaximizePlayer>(_onMaximizePlayer);
     on<UpdatePostion>(_onUpdatePosition);
 
     playerStream = controller.player.stream.playing
@@ -67,6 +68,8 @@ class MediaPlayerBloc extends Bloc<MediaPlayerEvent, MediaPlayerState> {
           event.video.id == (state as MediaPlayerPlaying).video.id) {
         controller.player.play();
         return;
+      } else {
+        add(MaximizePlayer());
       }
     }
 
@@ -79,6 +82,8 @@ class MediaPlayerBloc extends Bloc<MediaPlayerEvent, MediaPlayerState> {
         state is! MediaPlayerPlaying &&
         state is! MediaPlayerPaused) {
       if (event.video.streamingPlaylists!.isNotEmpty) {
+        add(MaximizePlayer());
+
         await controller.player.open(
             Media(event.video.streamingPlaylists![0].playlistUrl),
             play: true);
@@ -88,11 +93,11 @@ class MediaPlayerBloc extends Bloc<MediaPlayerEvent, MediaPlayerState> {
     }
     // Media is loaded and playing / paused
     else if (state is MediaPlayerPlaying || state is MediaPlayerPaused) {
+      // Check if the video being requested is the same as the one playing
       final video = (state is MediaPlayerPlaying)
           ? (state as MediaPlayerPlaying).video
           : (state as MediaPlayerPaused).video;
 
-      // check if the videos are the same
       if (event.video.id != video.id) {
         controller.player.stop();
         // The videos are different, load the new video
@@ -100,8 +105,11 @@ class MediaPlayerBloc extends Bloc<MediaPlayerEvent, MediaPlayerState> {
             Media(event.video.streamingPlaylists![0].playlistUrl),
             play: true);
 
+        add(MaximizePlayer());
+
         return;
       } else {
+        // If the video is the same then just continue playing it.
         controller.player.play();
       }
     } // Media is queued for playing, play it now
@@ -139,6 +147,10 @@ class MediaPlayerBloc extends Bloc<MediaPlayerEvent, MediaPlayerState> {
 
   void _onMinimizePlayer(MinimizePlayer event, Emitter<MediaPlayerState> emit) {
     miniController.animateToHeight(state: PanelState.MIN);
+  }
+
+  void _onMaximizePlayer(MaximizePlayer event, Emitter<MediaPlayerState> emit) {
+    miniController.animateToHeight(state: PanelState.MAX);
   }
 
   void _onUpdatePosition(UpdatePostion event, Emitter<MediaPlayerState> emit) {

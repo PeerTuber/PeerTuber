@@ -1,6 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:peertuber/src/core/constants/enums.dart';
+import 'package:peertuber/src/core/util/get_avatar_path.dart';
 import 'package:peertuber/src/features/common/domain/entities/entities.dart';
+import 'package:peertuber/src/features/common/presentation/bloc/instance/instance_cubit.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class VideoInfo extends StatelessWidget {
@@ -111,16 +115,13 @@ class _AuthorInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    late String avatarPath = '';
-    if (channel.avatar == null && account.avatar != null) {
-      avatarPath = account.avatar!.url == null
-          ? account.avatar!.path
-          : account.avatar!.url!;
-    } else if (channel.avatar != null) {
-      avatarPath = channel.avatar!.url == null
-          ? channel.avatar!.path
-          : channel.avatar!.url!;
-    }
+    final instanceState = context.read<InstanceCubit>().state;
+
+    final String avatarPath = GetAvatarPath.avatarPath(
+      types: (channel: channel, account: account),
+      target: AvatarTarget.channel,
+      instance: instanceState.instance,
+    );
 
     return Row(
       children: [
