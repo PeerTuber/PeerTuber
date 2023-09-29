@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:peertuber/src/core/constants/enums.dart';
+import 'package:peertuber/src/core/util/get_avatar_path.dart';
 import 'package:peertuber/src/features/common/data/models/video.dart';
 import 'package:peertuber/src/features/common/domain/entities/video.dart';
 import 'package:peertuber/src/features/common/presentation/bloc/instance/instance_cubit.dart';
@@ -19,20 +21,13 @@ class VideoCard extends HookWidget {
   Widget build(BuildContext context) {
     final instanceState = context.read<InstanceCubit>().state;
 
-    late String avatarPath;
-    late String thumbnailPath;
+    final String avatarPath = GetAvatarPath.avatarPath(
+      types: (channel: video.channel, account: video.account),
+      target: AvatarTarget.channel,
+      instance: instanceState.instance,
+    );
 
-    if (video.channel.avatar == null && video.account.avatar != null) {
-      avatarPath = video.account.avatar!.url == null
-          ? '${instanceState.instance.host}${video.account.avatar!.path}'
-          : video.account.avatar!.url!;
-    } else if (video.channel.avatar != null) {
-      avatarPath = video.channel.avatar!.url == null
-          ? '${instanceState.instance.host}${video.channel.avatar!.path}'
-          : video.channel.avatar!.url!;
-    } else {
-      avatarPath = '';
-    }
+    late String thumbnailPath;
 
     thumbnailPath = video.thumbnailUrl == null
         ? '${instanceState.instance.host}${video.thumbnailPath}'

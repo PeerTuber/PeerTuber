@@ -11,6 +11,8 @@ class AvatarModel extends AvatarEntity {
   AvatarEntity toEntity() {
     return AvatarEntity(
       path: path,
+      width: width,
+      url: url,
       createdAt: createdAt,
       updatedAt: updatedAt,
     );

@@ -25,8 +25,14 @@ class VideoDetailsSlidein extends StatelessWidget {
         builder: (context, state) {
           final miniController = context.read<MediaPlayerBloc>().miniController;
 
-          if ([MediaPlayerLoaded].contains(state.runtimeType)) {
-            return Miniplayer(
+          if (state is MediaPlayerNotLoaded) {
+            return const SizedBox.shrink();
+          }
+
+          return Visibility(
+            maintainState: true,
+            visible: [MediaPlayerLoaded].contains(state.runtimeType),
+            child: Miniplayer(
                 controller: miniController,
                 minHeight: _playerMinHeight + 4,
                 maxHeight: MediaQuery.of(context).size.height,
@@ -38,19 +44,16 @@ class VideoDetailsSlidein extends StatelessWidget {
                     onSlideIn!();
                   }
 
-                  if (state is MediaPlayerLoaded) {
-                    return VideoDetails(
-                      video: state.video,
+                  return Visibility(
+                    maintainState: (state is MediaPlayerLoaded),
+                    child: VideoDetails(
+                      video: (state as MediaPlayerLoaded).video,
                       playerState: state,
                       miniPlayerPercentage: percentage,
-                    );
-                  }
-
-                  return const SizedBox.shrink();
-                });
-          } else {
-            return const SizedBox.shrink();
-          }
+                    ),
+                  );
+                }),
+          );
         });
   }
 }
