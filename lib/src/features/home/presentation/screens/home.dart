@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:peertuber/injection.dart';
 import 'package:peertuber/src/features/common/presentation/bloc/media_player/media_player_bloc.dart';
+import 'package:peertuber/src/features/common/presentation/widgets/custom_app_scaffold.dart';
 import 'package:peertuber/src/features/common/presentation/widgets/widgets.dart';
 import 'package:peertuber/src/features/home/presentation/bloc/home_bloc.dart';
 
@@ -10,7 +11,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return CustomAppScaffold(
       body: BlocProvider(
         // Call the GetHomeVideosEvent when the page laods
         create: (_) => getIt<HomeBloc>()..add(GetHomeVideosEvent()),

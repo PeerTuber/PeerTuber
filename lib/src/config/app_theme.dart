@@ -4,7 +4,7 @@ class CustomTheme {
   ThemeData theme() {
     return ThemeData(
       appBarTheme: const AppBarTheme(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Color.fromRGBO(15, 15, 15, 1),
         elevation: 0,
         iconTheme: IconThemeData(color: Colors.white),
       ),
@@ -17,7 +17,11 @@ class CustomTheme {
         bodySmall: TextStyle(color: Colors.white),
       ),
       iconTheme: const IconThemeData(color: Colors.white),
-      colorScheme: ColorScheme.dark(primary: Colors.orange.shade800),
+      //colorScheme: ColorScheme.dark(primary: Colors.orange.shade800),
+      colorScheme: ColorScheme.dark(
+        background: const Color.fromRGBO(15, 15, 15, 1),
+        primary: Colors.orange.shade800,
+      ),
       dividerTheme: DividerThemeData(color: Colors.grey.shade800),
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,

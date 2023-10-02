@@ -34,6 +34,7 @@ class VideoDetailsSlidein extends StatelessWidget {
             visible: [MediaPlayerLoaded].contains(state.runtimeType),
             child: Miniplayer(
                 controller: miniController,
+                allowTapToClose: false,
                 minHeight: _playerMinHeight + 4,
                 maxHeight: MediaQuery.of(context).size.height,
                 elevation: 100,

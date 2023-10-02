@@ -47,17 +47,20 @@ class MockInternetConnection extends _i1.Mock
           Invocation.getter(#checkInterval),
         ),
       ) as Duration);
+
   @override
   _i3.Future<bool> get hasInternetAccess => (super.noSuchMethod(
         Invocation.getter(#hasInternetAccess),
         returnValue: _i3.Future<bool>.value(false),
       ) as _i3.Future<bool>);
+
   @override
   _i3.Future<_i2.InternetStatus> get internetStatus => (super.noSuchMethod(
         Invocation.getter(#internetStatus),
         returnValue:
             _i3.Future<_i2.InternetStatus>.value(_i2.InternetStatus.connected),
       ) as _i3.Future<_i2.InternetStatus>);
+
   @override
   _i3.Stream<_i2.InternetStatus> get onStatusChange => (super.noSuchMethod(
         Invocation.getter(#onStatusChange),

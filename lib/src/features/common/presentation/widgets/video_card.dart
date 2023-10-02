@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:peertuber/src/core/constants/enums.dart';
-import 'package:peertuber/src/core/util/get_avatar_path.dart';
 import 'package:peertuber/src/features/common/data/models/video.dart';
 import 'package:peertuber/src/features/common/domain/entities/video.dart';
 import 'package:peertuber/src/features/common/presentation/bloc/instance/instance_cubit.dart';
+import 'package:peertuber/src/features/common/presentation/widgets/avatar.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class VideoCard extends HookWidget {
@@ -20,13 +20,6 @@ class VideoCard extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final instanceState = context.read<InstanceCubit>().state;
-
-    final String avatarPath = GetAvatarPath.avatarPath(
-      types: (channel: video.channel, account: video.account),
-      target: AvatarTarget.channel,
-      instance: instanceState.instance,
-    );
-
     late String thumbnailPath;
 
     thumbnailPath = video.thumbnailUrl == null
@@ -90,11 +83,10 @@ class VideoCard extends HookWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // -- User Avatar
-                  CircleAvatar(
-                    onBackgroundImageError: (_, __) {},
-                    backgroundImage: CachedNetworkImageProvider(
-                      avatarPath,
-                    ),
+                  AvatarWidget(
+                    types: (channel: video.channel, account: video.account),
+                    target: AvatarTarget.channel,
+                    host: instanceState.instance.host,
                   ),
                   const SizedBox(
                     width: 8.0,
