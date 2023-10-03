@@ -40,6 +40,26 @@ class ChannelEntity extends Equatable {
     required this.ownerAccount,
   });
 
+  static const empty = ChannelEntity(
+    url: '',
+    name: '',
+    host: '',
+    avatars: [],
+    avatar: null,
+    id: 0,
+    hostRedundancyAllowed: false,
+    followingCount: 0,
+    followersCount: 0,
+    createdAt: null,
+    banners: null,
+    displayName: '',
+    description: '',
+    support: null,
+    isLocal: false,
+    updatedAt: null,
+    ownerAccount: null,
+  );
+
   @override
   List<Object?> get props => [
         url,

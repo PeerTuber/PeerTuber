@@ -18,11 +18,12 @@ class NavigationBottomBar extends HookWidget {
     return SlideTransition(
       position: animation,
       child: Container(
-        color: Theme.of(context).colorScheme.background,
+        color: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
         child: Padding(
           padding: const EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 35.0),
           child: GNav(
-            tabBackgroundColor: Theme.of(context).colorScheme.primary,
+            tabBackgroundColor:
+                Theme.of(context).bottomNavigationBarTheme.selectedItemColor!,
             iconSize: 30,
             gap: 4,
             padding: const EdgeInsets.all(10),

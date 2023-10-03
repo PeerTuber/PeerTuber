@@ -5,7 +5,6 @@ import 'package:peertuber/src/features/common/domain/usecases/usecase.dart';
 import 'package:peertuber/src/features/video_details/domain/usecases/get_video_details.dart';
 import 'package:injectable/injectable.dart';
 import 'package:peertuber/src/features/video_details/domain/usecases/get_video_details_stream.dart';
-import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 
 part 'video_details_event.dart';
 part 'video_details_state.dart';
@@ -14,12 +13,10 @@ part 'video_details_state.dart';
 class VideoDetailsBloc extends Bloc<VideoDetailsEvent, VideoDetailsState> {
   final GetVideoDetailsUseCase getVideoDetails;
   final GetVideoDetailsStreamUseCase getVideoDetailsStream;
-  final PanelController panelController;
 
   VideoDetailsBloc({
     required this.getVideoDetails,
     required this.getVideoDetailsStream,
-    required this.panelController,
   }) : super(VideoDetailsLoading()) {
     on<GetVideoDetailsEvent>(_onGetVideoDetails);
     on<ReloadVideoDetails>(_onReloadVideoDetails);

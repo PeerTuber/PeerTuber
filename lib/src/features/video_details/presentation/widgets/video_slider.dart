@@ -44,8 +44,6 @@ class VideoSlider extends StatelessWidget {
             ),*/
             LinearProgressIndicator(
               value: progress,
-              valueColor: AlwaysStoppedAnimation<Color>(
-                  Theme.of(context).colorScheme.primary),
             ),
           ],
         );

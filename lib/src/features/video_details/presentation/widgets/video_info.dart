@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:peertuber/src/core/constants/enums.dart';
+import 'package:peertuber/src/features/comments/presentation/bloc/comments/comments_cubit.dart';
 import 'package:peertuber/src/features/comments/presentation/widgets/comments_preview.dart';
 import 'package:peertuber/src/features/common/domain/entities/entities.dart';
 import 'package:peertuber/src/features/common/presentation/bloc/instance/instance_cubit.dart';
+import 'package:peertuber/src/features/common/presentation/bloc/slide_up_panel/slide_up_panel_cubit.dart';
 import 'package:peertuber/src/features/common/presentation/widgets/avatar.dart';
-import 'package:peertuber/src/features/video_details/presentation/bloc/video_details_block.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class VideoInfo extends StatelessWidget {
@@ -18,8 +19,6 @@ class VideoInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final panelController = context.read<VideoDetailsBloc>().panelController;
-
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
       child: Column(
@@ -51,9 +50,18 @@ class VideoInfo extends StatelessWidget {
           const Divider(),
           _buildActionRow(context, video),
           const Divider(),
-          CommentsPreview(
-            onTap: () {
-              panelController.open();
+          BlocBuilder<CommentsCubit, CommentsState>(
+            builder: (context, state) {
+              if (state is CommentsLoaded && state.comments.isNotEmpty) {
+                return CommentsPreview(
+                  onTap: () {
+                    context.read<SlideUpPanelCubit>().openPanel();
+                  },
+                  comment: state.comments.first,
+                );
+              } else {
+                return const SizedBox.shrink();
+              }
             },
           ),
         ],

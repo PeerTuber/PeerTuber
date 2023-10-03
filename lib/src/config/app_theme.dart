@@ -1,12 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomTheme {
   ThemeData theme() {
-    return ThemeData(
-      appBarTheme: const AppBarTheme(
-        backgroundColor: Color.fromRGBO(15, 15, 15, 1),
+    const backgroundColor = Color.fromRGBO(15, 15, 15, 1);
+    final baseTheme = ThemeData(
+      brightness: Brightness.dark,
+      colorScheme: ColorScheme.dark(
+        background: backgroundColor,
+        primary: Colors.orange.shade800,
+      ),
+      appBarTheme: AppBarTheme(
+        backgroundColor: backgroundColor,
+        foregroundColor: backgroundColor,
+        surfaceTintColor: backgroundColor,
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+        ),
+        titleTextStyle: GoogleFonts.notoSansTextTheme().headlineLarge!.copyWith(
+              fontSize: 26,
+              fontWeight: FontWeight.normal,
+              letterSpacing: 0.5,
+              color: Colors.white,
+            ),
       ),
       textTheme: const TextTheme(
         titleLarge: TextStyle(color: Colors.white),
@@ -17,18 +34,9 @@ class CustomTheme {
         bodySmall: TextStyle(color: Colors.white),
       ),
       iconTheme: const IconThemeData(color: Colors.white),
-      //colorScheme: ColorScheme.dark(primary: Colors.orange.shade800),
-      colorScheme: ColorScheme.dark(
-        background: const Color.fromRGBO(15, 15, 15, 1),
-        primary: Colors.orange.shade800,
-      ),
       dividerTheme: DividerThemeData(color: Colors.grey.shade800),
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
-      brightness: Brightness.dark,
-      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        selectedItemColor: Colors.white,
-      ),
       inputDecorationTheme: const InputDecorationTheme(
         labelStyle: TextStyle(
           color: Colors.grey,
@@ -38,6 +46,19 @@ class CustomTheme {
         ),
       ),
       useMaterial3: true,
+    );
+
+    return baseTheme.copyWith(
+      textTheme: GoogleFonts.robotoTextTheme(baseTheme.textTheme),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: baseTheme.colorScheme.background,
+        selectedItemColor: baseTheme.colorScheme.primary,
+      ),
+      progressIndicatorTheme: ProgressIndicatorThemeData(
+        color: baseTheme.colorScheme.primary,
+        linearTrackColor: baseTheme.colorScheme.primary.withOpacity(0.1),
+        circularTrackColor: baseTheme.colorScheme.primary.withOpacity(0.1),
+      ),
     );
   }
 }

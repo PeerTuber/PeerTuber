@@ -33,7 +33,7 @@ class VideoCard extends HookWidget {
         }
       },
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 12.0, 0, 12.0),
+        padding: const EdgeInsets.symmetric(vertical: 12),
         child: Column(
           children: [
             Stack(
@@ -101,13 +101,10 @@ class VideoCard extends HookWidget {
                           video.name,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .copyWith(
-                                  fontSize: 16.0,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.bold),
+                          style:
+                              Theme.of(context).textTheme.titleMedium!.copyWith(
+                                    letterSpacing: 1,
+                                  ),
                         )),
                         Flexible(
                           child: Text(
@@ -116,7 +113,6 @@ class VideoCard extends HookWidget {
                             overflow: TextOverflow.ellipsis,
                             style:
                                 Theme.of(context).textTheme.bodySmall!.copyWith(
-                                      fontSize: 13.0,
                                       color: Colors.grey,
                                     ),
                           ),
