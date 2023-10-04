@@ -19,7 +19,7 @@ import 'package:media_kit_video/media_kit_video.dart' as _i19;
 import 'package:miniplayer/miniplayer.dart' as _i9;
 import 'package:sliding_up_panel2/sliding_up_panel2.dart' as _i11;
 
-import 'injection.dart' as _i45;
+import 'injection.dart' as _i46;
 import 'src/core/network/cache_client.dart' as _i3;
 import 'src/core/network/network_info.dart' as _i10;
 import 'src/features/auth/data/datasources/remote_auth_data_source.dart'
@@ -27,21 +27,22 @@ import 'src/features/auth/data/datasources/remote_auth_data_source.dart'
 import 'src/features/auth/data/repositories/auth_repository_impl.dart' as _i24;
 import 'src/features/auth/domain/repositories/auth_repository.dart' as _i23;
 import 'src/features/auth/domain/usecases/get_auth_status.dart' as _i27;
-import 'src/features/auth/domain/usecases/get_logged_in_user.dart' as _i29;
-import 'src/features/auth/domain/usecases/login_user.dart' as _i34;
-import 'src/features/auth/domain/usecases/logout_user.dart' as _i35;
-import 'src/features/auth/domain/usecases/signup_user.dart' as _i37;
-import 'src/features/auth/presentation/blocs/auth/auth_bloc.dart' as _i39;
-import 'src/features/auth/presentation/blocs/login/login_cubit.dart' as _i43;
+import 'src/features/auth/domain/usecases/get_logged_in_user.dart' as _i30;
+import 'src/features/auth/domain/usecases/login_user.dart' as _i35;
+import 'src/features/auth/domain/usecases/logout_user.dart' as _i36;
+import 'src/features/auth/domain/usecases/signup_user.dart' as _i38;
+import 'src/features/auth/presentation/blocs/auth/auth_bloc.dart' as _i40;
+import 'src/features/auth/presentation/blocs/login/login_cubit.dart' as _i44;
 import 'src/features/comments/data/datasources/comment_remote_data_source.dart'
     as _i5;
 import 'src/features/comments/data/repositories/comment_repository_impl.dart'
     as _i26;
 import 'src/features/comments/domain/repositories/comment_repository.dart'
     as _i25;
-import 'src/features/comments/domain/usecases/get_comment_threads.dart' as _i28;
+import 'src/features/comments/domain/usecases/get_comment_replies.dart' as _i28;
+import 'src/features/comments/domain/usecases/get_comment_threads.dart' as _i29;
 import 'src/features/comments/presentation/bloc/comments/comments_cubit.dart'
-    as _i40;
+    as _i41;
 import 'src/features/common/data/datasources/search_videos_remote_data_source.dart'
     as _i14;
 import 'src/features/common/data/repositories/search_videos_repository_impl.dart'
@@ -52,19 +53,19 @@ import 'src/features/common/domain/usecases/search_videos.dart' as _i17;
 import 'src/features/common/presentation/bloc/instance/instance_cubit.dart'
     as _i7;
 import 'src/features/common/presentation/bloc/media_player/media_player_bloc.dart'
-    as _i44;
+    as _i45;
 import 'src/features/common/presentation/bloc/search_videos/search_videos_bloc.dart'
-    as _i36;
+    as _i37;
 import 'src/features/common/presentation/bloc/slide_up_panel/slide_up_panel_cubit.dart'
     as _i18;
 import 'src/features/home/data/datasources/home_videos_remote_data_source.dart'
     as _i6;
 import 'src/features/home/data/repositories/home_videos_repository_impl.dart'
-    as _i33;
+    as _i34;
 import 'src/features/home/domain/repositories/home_videos_repository.dart'
-    as _i32;
-import 'src/features/home/domain/usecases/get_home_videos.dart' as _i41;
-import 'src/features/home/presentation/bloc/home_bloc.dart' as _i42;
+    as _i33;
+import 'src/features/home/domain/usecases/get_home_videos.dart' as _i42;
+import 'src/features/home/presentation/bloc/home_bloc.dart' as _i43;
 import 'src/features/video_details/data/datasources/video_details_remote_data_source.dart'
     as _i20;
 import 'src/features/video_details/data/repositories/video_details_repository_impl.dart'
@@ -72,11 +73,11 @@ import 'src/features/video_details/data/repositories/video_details_repository_im
 import 'src/features/video_details/domain/repositories/video_details_repository.dart'
     as _i21;
 import 'src/features/video_details/domain/usecases/get_video_details.dart'
-    as _i31;
+    as _i32;
 import 'src/features/video_details/domain/usecases/get_video_details_stream.dart'
-    as _i30;
+    as _i31;
 import 'src/features/video_details/presentation/bloc/video_details_block.dart'
-    as _i38;
+    as _i39;
 
 extension GetItInjectableX on _i1.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -153,49 +154,53 @@ extension GetItInjectableX on _i1.GetIt {
         ));
     gh.lazySingleton<_i27.GetAuthStatus>(
         () => _i27.GetAuthStatus(gh<_i23.AuthRepository>()));
-    gh.lazySingleton<_i28.GetCommentThreadUseCase>(
-        () => _i28.GetCommentThreadUseCase(gh<_i25.CommentRepository>()));
-    gh.lazySingleton<_i29.GetLoggedInUser>(
-        () => _i29.GetLoggedInUser(gh<_i23.AuthRepository>()));
-    gh.lazySingleton<_i30.GetVideoDetailsStreamUseCase>(() =>
-        _i30.GetVideoDetailsStreamUseCase(gh<_i21.VideoDetailsRepository>()));
-    gh.lazySingleton<_i31.GetVideoDetailsUseCase>(
-        () => _i31.GetVideoDetailsUseCase(gh<_i21.VideoDetailsRepository>()));
-    gh.lazySingleton<_i32.HomeVideosRespository>(
-        () => _i33.HomeVideosRespositoryImpl(
+    gh.lazySingleton<_i28.GetCommentRepliesUseCase>(
+        () => _i28.GetCommentRepliesUseCase(gh<_i25.CommentRepository>()));
+    gh.lazySingleton<_i29.GetCommentThreadUseCase>(
+        () => _i29.GetCommentThreadUseCase(gh<_i25.CommentRepository>()));
+    gh.lazySingleton<_i30.GetLoggedInUser>(
+        () => _i30.GetLoggedInUser(gh<_i23.AuthRepository>()));
+    gh.lazySingleton<_i31.GetVideoDetailsStreamUseCase>(() =>
+        _i31.GetVideoDetailsStreamUseCase(gh<_i21.VideoDetailsRepository>()));
+    gh.lazySingleton<_i32.GetVideoDetailsUseCase>(
+        () => _i32.GetVideoDetailsUseCase(gh<_i21.VideoDetailsRepository>()));
+    gh.lazySingleton<_i33.HomeVideosRespository>(
+        () => _i34.HomeVideosRespositoryImpl(
               remoteDataSource: gh<_i6.HomeVideosRemoteDataSource>(),
               networkInfo: gh<_i10.NetworkInfo>(),
             ));
-    gh.lazySingleton<_i34.LoginUser>(
-        () => _i34.LoginUser(gh<_i23.AuthRepository>()));
-    gh.lazySingleton<_i35.LogoutUser>(
-        () => _i35.LogoutUser(gh<_i23.AuthRepository>()));
+    gh.lazySingleton<_i35.LoginUser>(
+        () => _i35.LoginUser(gh<_i23.AuthRepository>()));
+    gh.lazySingleton<_i36.LogoutUser>(
+        () => _i36.LogoutUser(gh<_i23.AuthRepository>()));
     gh.lazySingleton<_i12.Player>(() => registerModule
         .p(gh<_i12.PlayerConfiguration>(instanceName: 'Configuration')));
-    gh.factory<_i36.SearchVideosBloc>(() =>
-        _i36.SearchVideosBloc(searchVideos: gh<_i17.SearchVideosUseCase>()));
-    gh.lazySingleton<_i37.SignupUser>(
-        () => _i37.SignupUser(gh<_i23.AuthRepository>()));
+    gh.factory<_i37.SearchVideosBloc>(() =>
+        _i37.SearchVideosBloc(searchVideos: gh<_i17.SearchVideosUseCase>()));
+    gh.lazySingleton<_i38.SignupUser>(
+        () => _i38.SignupUser(gh<_i23.AuthRepository>()));
     gh.lazySingleton<_i19.VideoController>(() => registerModule.vc(
         gh<_i19.VideoControllerConfiguration>(instanceName: 'Configuration')));
-    gh.factory<_i38.VideoDetailsBloc>(() => _i38.VideoDetailsBloc(
-          getVideoDetails: gh<_i31.GetVideoDetailsUseCase>(),
-          getVideoDetailsStream: gh<_i30.GetVideoDetailsStreamUseCase>(),
+    gh.factory<_i39.VideoDetailsBloc>(() => _i39.VideoDetailsBloc(
+          getVideoDetails: gh<_i32.GetVideoDetailsUseCase>(),
+          getVideoDetailsStream: gh<_i31.GetVideoDetailsStreamUseCase>(),
         ));
-    gh.factory<_i39.AuthBloc>(() => _i39.AuthBloc(
-          logoutUser: gh<_i35.LogoutUser>(),
+    gh.factory<_i40.AuthBloc>(() => _i40.AuthBloc(
+          logoutUser: gh<_i36.LogoutUser>(),
           getAuthStatus: gh<_i27.GetAuthStatus>(),
-          getLoggedInUser: gh<_i29.GetLoggedInUser>(),
+          getLoggedInUser: gh<_i30.GetLoggedInUser>(),
         ));
-    gh.factory<_i40.CommentsCubit>(() => _i40.CommentsCubit(
-        getCommentThread: gh<_i28.GetCommentThreadUseCase>()));
-    gh.lazySingleton<_i41.GetHomeVideos>(
-        () => _i41.GetHomeVideos(gh<_i32.HomeVideosRespository>()));
-    gh.factory<_i42.HomeBloc>(
-        () => _i42.HomeBloc(getHomeVideos: gh<_i41.GetHomeVideos>()));
-    gh.factory<_i43.LoginCubit>(
-        () => _i43.LoginCubit(loginUser: gh<_i34.LoginUser>()));
-    gh.factory<_i44.MediaPlayerBloc>(() => _i44.MediaPlayerBloc(
+    gh.factory<_i41.CommentsCubit>(() => _i41.CommentsCubit(
+          getCommentThread: gh<_i29.GetCommentThreadUseCase>(),
+          getCommentReplies: gh<_i28.GetCommentRepliesUseCase>(),
+        ));
+    gh.lazySingleton<_i42.GetHomeVideos>(
+        () => _i42.GetHomeVideos(gh<_i33.HomeVideosRespository>()));
+    gh.factory<_i43.HomeBloc>(
+        () => _i43.HomeBloc(getHomeVideos: gh<_i42.GetHomeVideos>()));
+    gh.factory<_i44.LoginCubit>(
+        () => _i44.LoginCubit(loginUser: gh<_i35.LoginUser>()));
+    gh.factory<_i45.MediaPlayerBloc>(() => _i45.MediaPlayerBloc(
           controller: gh<_i19.VideoController>(),
           miniController: gh<_i9.MiniplayerController>(),
         ));
@@ -203,7 +208,7 @@ extension GetItInjectableX on _i1.GetIt {
   }
 }
 
-class _$RegisterModule extends _i45.RegisterModule {
+class _$RegisterModule extends _i46.RegisterModule {
   @override
   _i3.CacheClient get cacheClient => _i3.CacheClient();
 

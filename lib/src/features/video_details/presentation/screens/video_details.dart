@@ -6,7 +6,7 @@ import 'package:peertuber/src/features/common/domain/entities/search_data.dart';
 import 'package:peertuber/src/features/common/domain/entities/video.dart';
 import 'package:peertuber/src/features/common/presentation/bloc/media_player/media_player_bloc.dart';
 import 'package:peertuber/src/features/common/presentation/bloc/search_videos/search_videos_bloc.dart';
-import 'package:peertuber/src/features/comments/presentation/screens/comments_screen.dart';
+import 'package:peertuber/src/features/comments/presentation/screens/comments_navigation.dart';
 import 'package:peertuber/src/features/common/presentation/bloc/slide_up_panel/slide_up_panel_cubit.dart';
 import 'package:peertuber/src/features/video_details/presentation/bloc/video_details_block.dart';
 import 'package:peertuber/src/features/video_details/presentation/widgets/widgets.dart';
@@ -63,9 +63,13 @@ class VideoDetails extends StatelessWidget {
               }
             },
             panelBuilder: () {
-              return CommentsScreen(
-                videoId: video!.id,
-              );
+              if (miniPlayerPercentage == 1) {
+                return CommentsNavigation(
+                  videoId: video!.id,
+                );
+              }
+
+              return null;
             },
             body: SafeArea(
               bottom: false,

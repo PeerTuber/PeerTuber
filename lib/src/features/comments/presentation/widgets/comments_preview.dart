@@ -27,6 +27,7 @@ class CommentsPreview extends StatelessWidget {
             comment: comment,
             isSoloComment: true,
             hasPadding: false,
+            data: (comments: null, replies: null),
           ),
         ),
       ),

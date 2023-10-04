@@ -51,13 +51,20 @@ class VideoInfo extends StatelessWidget {
           _buildActionRow(context, video),
           const Divider(),
           BlocBuilder<CommentsCubit, CommentsState>(
+            buildWhen: (previous, current) {
+              if (current is CommentsLoaded) {
+                return current.replies!.isEmpty;
+              }
+
+              return false;
+            },
             builder: (context, state) {
-              if (state is CommentsLoaded && state.comments.isNotEmpty) {
+              if (state is CommentsLoaded && state.comments!.isNotEmpty) {
                 return CommentsPreview(
                   onTap: () {
                     context.read<SlideUpPanelCubit>().openPanel();
                   },
-                  comment: state.comments.first,
+                  comment: state.comments!.first,
                 );
               } else {
                 return const SizedBox.shrink();

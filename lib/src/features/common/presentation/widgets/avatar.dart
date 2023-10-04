@@ -21,10 +21,18 @@ class AvatarWidget extends StatelessWidget {
       instanceHost: host,
     );
 
-    return CircleAvatar(
-      onBackgroundImageError: (_, __) {},
-      backgroundImage: CachedNetworkImageProvider(
-        avatarPath,
+    return ConstrainedBox(
+      constraints: const BoxConstraints(
+        minWidth: 20,
+        minHeight: 20,
+        maxWidth: 75,
+        maxHeight: 75,
+      ),
+      child: CircleAvatar(
+        onBackgroundImageError: (_, __) {},
+        backgroundImage: CachedNetworkImageProvider(
+          avatarPath,
+        ),
       ),
     );
   }
