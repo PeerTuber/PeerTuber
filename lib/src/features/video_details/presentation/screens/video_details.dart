@@ -54,9 +54,11 @@ class VideoDetails extends StatelessWidget {
         builder: (context, state) {
           return SlidingUpPanel(
             controller: context.read<SlideUpPanelCubit>().panelController,
+            disableDraggableOnScrolling: true,
             minHeight: 0,
             maxHeight: (MediaQuery.of(context).size.height -
-                (MediaQuery.of(context).size.width * 9.0 / 16.0)),
+                    (MediaQuery.of(context).size.width * 9.0 / 16.0)) -
+                MediaQuery.of(context).viewPadding.top,
             onPanelSlide: (position) {
               if (position == 0) {
                 context.read<SlideUpPanelCubit>().closePanel();

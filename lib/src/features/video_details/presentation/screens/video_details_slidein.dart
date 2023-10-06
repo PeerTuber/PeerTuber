@@ -25,12 +25,12 @@ class VideoDetailsSlidein extends StatelessWidget {
         builder: (context, state) {
           final miniController = context.read<MediaPlayerBloc>().miniController;
 
-          if (state is MediaPlayerNotLoaded) {
+          if (state is! MediaPlayerLoaded) {
             return const SizedBox.shrink();
           }
 
           return Visibility(
-            maintainState: true,
+            maintainState: false,
             visible: [MediaPlayerLoaded].contains(state.runtimeType),
             child: Miniplayer(
                 controller: miniController,
@@ -46,9 +46,9 @@ class VideoDetailsSlidein extends StatelessWidget {
                   }
 
                   return Visibility(
-                    maintainState: (state is MediaPlayerLoaded),
+                    maintainState: false,
                     child: VideoDetails(
-                      video: (state as MediaPlayerLoaded).video,
+                      video: state.video,
                       playerState: state,
                       miniPlayerPercentage: percentage,
                     ),

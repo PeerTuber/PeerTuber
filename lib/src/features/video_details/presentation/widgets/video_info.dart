@@ -53,7 +53,7 @@ class VideoInfo extends StatelessWidget {
           BlocBuilder<CommentsCubit, CommentsState>(
             buildWhen: (previous, current) {
               if (current is CommentsLoaded) {
-                return current.replies!.isEmpty;
+                return current.replies != null && current.replies!.isEmpty;
               }
 
               return false;

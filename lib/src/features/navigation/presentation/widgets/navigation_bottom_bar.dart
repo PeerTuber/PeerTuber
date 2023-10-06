@@ -29,12 +29,6 @@ class NavigationBottomBar extends HookWidget {
             padding: const EdgeInsets.all(10),
             selectedIndex: selectedIndex,
             onTabChange: (value) => onTabChange(value),
-            /*onTabChange: (i) => setState(() {
-                /*ref
-                    .read(miniPlayerControllerProvider)
-                    .animateToHeight(state: PanelState.MIN);*/
-                _selectedIndex = i;
-              }),*/
             tabs: [
               const GButton(
                 icon: Icons.home_outlined,

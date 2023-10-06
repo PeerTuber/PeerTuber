@@ -3,6 +3,7 @@ import 'package:peertuber/src/features/comments/domain/entities/comment.dart';
 import 'package:peertuber/src/features/comments/domain/entities/comment_reply.dart';
 import 'package:peertuber/src/features/comments/presentation/screens/comment_screen.dart';
 import 'package:peertuber/src/features/comments/presentation/widgets/comment.dart';
+import 'package:peertuber/src/features/comments/presentation/widgets/comment_cell.dart';
 
 typedef CommentsData = ({
   List<CommentEntity>? comments,
@@ -18,6 +19,7 @@ class CommentsList extends StatelessWidget {
     this.navKey,
     this.contentId,
     this.parentIsReply = false,
+    this.depth = 0,
   });
 
   final bool isThread;
@@ -26,6 +28,7 @@ class CommentsList extends StatelessWidget {
   final GlobalKey<NavigatorState>? navKey;
   final int? contentId;
   final CommentsData data;
+  final int depth;
 
   @override
   Widget build(BuildContext context) {
@@ -53,63 +56,21 @@ class CommentsList extends StatelessWidget {
           return CommentCell(
             hasReplyLine: isThread ? true : false,
             hasRightPadding: parentIsReply ? false : true,
+            depth: depth,
+            replyIndex: index,
             child: CommentWrapper(
               index: index,
               isThread: isThread,
               navKey: navKey,
               contentId: contentId,
               data: data,
+              depth: depth,
             ),
           );
         }
       },
       separatorBuilder: (_, __) => const SizedBox.shrink(),
       padding: EdgeInsets.zero,
-    );
-  }
-}
-
-//!-- COMMENT CELL
-
-class CommentCell extends StatelessWidget {
-  const CommentCell({
-    super.key,
-    required this.child,
-    this.hasReplyLine = false,
-    this.hasRightPadding = true,
-  });
-
-  final Widget child;
-  final bool hasReplyLine;
-  final bool hasRightPadding;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: const Color.fromARGB(255, 32, 32, 34),
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(5, 0, hasRightPadding ? 5 : 0, 0),
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border(
-              left: BorderSide(
-                color: hasReplyLine
-                    ? Theme.of(context).colorScheme.primary
-                    : Colors.transparent,
-                width: 3,
-              ),
-              top: BorderSide(
-                color: Colors.grey.withOpacity(0.2),
-                width: 0.2,
-              ),
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(5.0, 10.0, 0, 10.0),
-            child: child,
-          ),
-        ),
-      ),
     );
   }
 }
@@ -124,6 +85,7 @@ class CommentWrapper extends StatelessWidget {
     required this.navKey,
     required this.contentId,
     required this.data,
+    this.depth = 0,
   });
 
   final int index;
@@ -131,6 +93,7 @@ class CommentWrapper extends StatelessWidget {
   final GlobalKey<NavigatorState>? navKey;
   final int? contentId;
   final CommentsData data;
+  final int depth;
 
   @override
   Widget build(BuildContext context) {
@@ -153,6 +116,7 @@ class CommentWrapper extends StatelessWidget {
         }));
       },
       child: CommentWidget(
+        depth: depth,
         comment: isThread
             ? data.replies![index - 1].comment
             : data.comments![index - 1],

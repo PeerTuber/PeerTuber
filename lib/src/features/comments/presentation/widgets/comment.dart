@@ -14,6 +14,7 @@ class CommentWidget extends StatelessWidget {
     super.key,
     required this.comment,
     this.data,
+    this.depth = 0,
     this.isSoloComment = false,
     this.isInThread = false,
     this.hasPadding = true,
@@ -21,6 +22,7 @@ class CommentWidget extends StatelessWidget {
 
   final CommentEntity comment;
   final CommentsData? data;
+  final int depth;
   final bool isSoloComment;
   final bool isInThread;
   final bool hasPadding;
@@ -32,9 +34,10 @@ class CommentWidget extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(6, 0, 0, 0),
+          padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               //!-- AVATAR
               ConstrainedBox(
@@ -138,28 +141,10 @@ class CommentWidget extends StatelessWidget {
           child: CommentsList(
             isThread: isInThread,
             parentIsReply: true,
+            depth: depth + 1,
             data: (comments: null, replies: data!.replies),
           ),
         ),
-
-        //!-- CHILDREN REPLY LIST VIEW
-        /*Visibility(
-          visible: data != null &&
-              data!.replies != null &&
-              data!.replies!.isNotEmpty,
-          child: ListView(
-            shrinkWrap: true,
-            primary: false,
-            children: [
-              const Text('Hello'),
-              const Text('Hello'),
-              const Text('Hello'),
-              const Text('Hello'),
-              const Text('Hello'),
-              const Text('Hello'),
-            ],
-          ),
-        ),*/
       ],
     );
   }

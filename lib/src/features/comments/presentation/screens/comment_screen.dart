@@ -43,6 +43,7 @@ class CommentsScreen extends HookWidget {
       },
       child: Column(
         children: [
+          //!-- APP BAR
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: Row(
@@ -58,11 +59,11 @@ class CommentsScreen extends HookWidget {
                 ),
                 Visibility(
                   visible: !isThread,
-                  child: const Text('Comments'),
+                  child: const Text('Comments', style: TextStyle(fontSize: 20)),
                 ),
                 Visibility(
                   visible: isThread,
-                  child: const Text('Replies'),
+                  child: const Text('Replies', style: TextStyle(fontSize: 20)),
                 ),
                 const Spacer(),
                 IconButton(
@@ -73,6 +74,8 @@ class CommentsScreen extends HookWidget {
               ],
             ),
           ),
+
+          //!-- COMMENT LIST
           BlocBuilder<CommentsCubit, CommentsState>(
             buildWhen: (previous, current) {
               if (current is CommentsLoaded) {
@@ -99,14 +102,17 @@ class CommentsScreen extends HookWidget {
                 visible: (state is CommentsLoaded),
                 child: Expanded(
                   child: SingleChildScrollView(
-                    child: CommentsList(
-                      isThread: isThread,
-                      parent: parent,
-                      navKey: navKey,
-                      contentId: contentId,
-                      data: (
-                        comments: (state as CommentsLoaded).comments,
-                        replies: (state as CommentsLoaded).replies
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 20.0),
+                      child: CommentsList(
+                        isThread: isThread,
+                        parent: parent,
+                        navKey: navKey,
+                        contentId: contentId,
+                        data: (
+                          comments: (state as CommentsLoaded).comments,
+                          replies: (state as CommentsLoaded).replies
+                        ),
                       ),
                     ),
                   ),

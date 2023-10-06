@@ -10,6 +10,7 @@ class CommentsNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 32, 32, 34),
       body: Navigator(
         key: _commentsScreen,
         onGenerateRoute: (settings) => MaterialPageRoute(

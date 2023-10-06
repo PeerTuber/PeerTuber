@@ -13,6 +13,8 @@ class CustomSliverAppBar extends StatelessWidget {
         child: Image.asset('assets/images/peertube.png'),
       ),
       title: const Text('PeerTuber'),
+      centerTitle: false,
+      titleSpacing: 0,
       actions: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
