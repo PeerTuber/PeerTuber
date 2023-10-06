@@ -70,6 +70,10 @@ class CustomTheme {
           threadLineColor4: AppColors.primary.shade500,
           threadLineColor5: AppColors.primary.shade400,
           threadLineSpacing: 8,
+          cellTopBorder: BorderSide(
+            color: Colors.grey.withOpacity(0.2),
+            width: 0.2,
+          ),
         )
       },
     );
@@ -80,16 +84,6 @@ class CustomTheme {
     const backgroundColor = Color.fromRGBO(15, 15, 15, 1);
     final baseTheme = ThemeData(
       brightness: Brightness.light,
-      extensions: <ThemeExtension<dynamic>>{
-        CommentCellStyle(
-          threadLineColor1: Colors.orange.shade800,
-          threadLineColor2: Colors.orange.shade700,
-          threadLineColor3: Colors.orange.shade600,
-          threadLineColor4: Colors.orange.shade500,
-          threadLineColor5: Colors.orange.shade400,
-          threadLineSpacing: 8,
-        )
-      },
       colorScheme: ColorScheme.light(
         background: backgroundColor,
         primary: Colors.orange.shade800,
@@ -143,6 +137,20 @@ class CustomTheme {
         linearTrackColor: baseTheme.colorScheme.primary.withOpacity(0.1),
         circularTrackColor: baseTheme.colorScheme.primary.withOpacity(0.1),
       ),
+      extensions: <ThemeExtension<dynamic>>{
+        CommentCellStyle(
+          threadLineColor1: Colors.orange.shade800,
+          threadLineColor2: Colors.orange.shade700,
+          threadLineColor3: Colors.orange.shade600,
+          threadLineColor4: Colors.orange.shade500,
+          threadLineColor5: Colors.orange.shade400,
+          threadLineSpacing: 8,
+          cellTopBorder: BorderSide(
+            color: Colors.grey.withOpacity(0.2),
+            width: 0.2,
+          ),
+        )
+      },
     );
   }
 }

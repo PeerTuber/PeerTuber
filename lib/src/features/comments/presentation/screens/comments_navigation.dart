@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:peertuber/src/features/comments/presentation/screens/comment_screen.dart';
 
 class CommentsNavigation extends StatelessWidget {
-  CommentsNavigation({super.key, required this.videoId});
+  CommentsNavigation({super.key, required this.videoId, this.videoUrl});
 
   final int videoId;
+  final String? videoUrl;
   final _commentsScreen = GlobalKey<NavigatorState>();
 
   @override
@@ -20,6 +21,7 @@ class CommentsNavigation extends StatelessWidget {
             navKey: _commentsScreen,
             isThread: false,
             contentId: videoId,
+            videoUrl: videoUrl,
           ),
         ),
       ),

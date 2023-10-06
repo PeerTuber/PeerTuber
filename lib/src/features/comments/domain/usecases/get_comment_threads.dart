@@ -16,6 +16,11 @@ class GetCommentThreadUseCase
   @override
   Future<Either<Failure, List<CommentEntity>>> call(
       CommentParams params) async {
-    return await repository.getComments(videoId: params.videoId);
+    if (params.videoUrl != null) {
+      return await repository.getCommentsByUrl(
+          videoUrl: params.videoUrl!, videoId: params.videoId);
+    } else {
+      return await repository.getComments(videoId: params.videoId);
+    }
   }
 }

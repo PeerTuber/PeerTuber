@@ -6,16 +6,16 @@ class ChannelModel extends Equatable {
   final String url;
   final String name;
   final String host;
-  final List<AvatarModel> avatars;
+  final List<AvatarModel>? avatars;
   final AvatarModel? avatar;
   final int id;
   final bool hostRedundancyAllowed;
   final int followingCount;
   final int followersCount;
   final DateTime? createdAt;
-  final List<dynamic>? banners;
+  final dynamic banners;
   final String displayName;
-  final String description;
+  final String? description;
   final dynamic support;
   final bool isLocal;
   final DateTime? updatedAt;
@@ -25,7 +25,7 @@ class ChannelModel extends Equatable {
     required this.url,
     required this.name,
     required this.host,
-    required this.avatars,
+    this.avatars,
     required this.avatar,
     required this.id,
     required this.hostRedundancyAllowed,
@@ -67,7 +67,7 @@ class ChannelModel extends Equatable {
       url: url,
       name: name,
       host: host,
-      avatars: avatars.map((e) => e.toEntity()).toList(growable: false),
+      avatars: avatars?.map((e) => e.toEntity()).toList(growable: false),
       avatar: avatar?.toEntity(),
       id: id,
       hostRedundancyAllowed: hostRedundancyAllowed,
@@ -88,9 +88,6 @@ class ChannelModel extends Equatable {
         url: entity.url,
         name: entity.name,
         host: entity.host,
-        avatars: entity.avatars
-            .map((e) => AvatarModel.fromEntity(e))
-            .toList(growable: false),
         avatar: entity.avatar != null
             ? AvatarModel.fromEntity(entity.avatar!)
             : null,
@@ -114,8 +111,6 @@ class ChannelModel extends Equatable {
         url: json["url"],
         name: json["name"],
         host: json["host"],
-        avatars: List<AvatarModel>.from(
-            json["avatars"].map((x) => AvatarModel.fromJson(x))),
         avatar: json["avatar"] != null
             ? AvatarModel.fromJson(json["avatar"])
             : null,

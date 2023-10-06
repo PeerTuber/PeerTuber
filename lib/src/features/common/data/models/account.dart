@@ -10,14 +10,14 @@ class AccountModel extends Equatable {
   final String url;
   final String name;
   final String host;
-  final List<AvatarModel> avatars;
+  final List<AvatarModel>? avatars;
   final AvatarModel? avatar;
   final int id;
   final bool? hostRedundancyAllowed;
   final int? followingCount;
   final int? followersCount;
   final DateTime? createdAt;
-  final List<dynamic>? banners;
+  final dynamic banners;
   final String displayName;
   final String? description;
   final DateTime? updatedAt;
@@ -27,8 +27,8 @@ class AccountModel extends Equatable {
     required this.url,
     required this.name,
     required this.host,
-    required this.avatars,
-    required this.avatar,
+    this.avatars,
+    this.avatar,
     required this.id,
     this.hostRedundancyAllowed,
     this.followingCount = 0,
@@ -76,9 +76,6 @@ class AccountModel extends Equatable {
         url: entity.url,
         name: entity.name,
         host: entity.host,
-        avatars: entity.avatars
-            .map((avatar) => AvatarModel.fromEntity(avatar))
-            .toList(),
         avatar: AvatarModel.fromEntity(entity.avatar!),
         id: entity.id,
         hostRedundancyAllowed: entity.hostRedundancyAllowed,

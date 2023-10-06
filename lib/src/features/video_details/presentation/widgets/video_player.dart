@@ -60,8 +60,9 @@ class VideoPlayer extends StatelessWidget {
                         Expanded(child: _MiniPlayerVideoInfo(video: video)),
                         const MiniPlayerControls(),
                         IconButton(
-                          onPressed: () =>
-                              context.read<MediaPlayerBloc>().add(StopMedia()),
+                          onPressed: () => context
+                              .read<MediaPlayerBloc>()
+                              .add(const StopMedia(closePlayer: true)),
                           iconSize: 30.0,
                           icon: const Icon(Icons.close),
                         ),

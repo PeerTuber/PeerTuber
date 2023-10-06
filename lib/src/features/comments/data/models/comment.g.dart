@@ -23,7 +23,9 @@ CommentModel _$CommentModelFromJson(Map<String, dynamic> json) => CommentModel(
       isDeleted: json['isDeleted'] as bool,
       totalRepliesFromVideoAuthor: json['totalRepliesFromVideoAuthor'] as int,
       totalReplies: json['totalReplies'] as int,
-      account: AccountModel.fromJson(json['account'] as Map<String, dynamic>),
+      account: json['account'] == null
+          ? null
+          : AccountModel.fromJson(json['account'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$CommentModelToJson(CommentModel instance) =>

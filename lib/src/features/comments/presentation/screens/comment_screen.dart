@@ -11,12 +11,14 @@ class CommentsScreen extends HookWidget {
     super.key,
     required this.navKey,
     required this.isThread,
+    this.videoUrl,
     required this.contentId,
     this.parent = CommentEntity.empty,
   });
 
   final GlobalKey<NavigatorState>? navKey;
   final bool isThread;
+  final String? videoUrl;
   final int contentId;
   final CommentEntity? parent;
 
@@ -24,16 +26,18 @@ class CommentsScreen extends HookWidget {
   Widget build(BuildContext context) {
     useEffect(() {
       if (!isThread) {
-        context
-            .read<CommentsCubit>()
-            .getComments(videoId: contentId, requesterKey: key!);
+        context.read<CommentsCubit>().getComments(
+            videoId: contentId, requesterKey: key!, videoUrl: videoUrl);
       } else {
         context.read<CommentsCubit>().getReplies(
-            videoId: contentId, threadId: parent!.id, requesterKey: key!);
+            videoId: contentId,
+            threadId: parent!.id,
+            requesterKey: key!,
+            videoUrl: videoUrl);
       }
 
       return;
-    }, []);
+    }, [key!]);
 
     return BlocListener<SlideUpPanelCubit, SlideUpPanelState>(
       listener: (context, state) {

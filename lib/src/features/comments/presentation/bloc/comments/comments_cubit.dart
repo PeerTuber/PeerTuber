@@ -19,9 +19,14 @@ class CommentsCubit extends Cubit<CommentsState> {
   final GetCommentThreadUseCase getCommentThread;
   final GetCommentRepliesUseCase getCommentReplies;
 
-  void getComments({required int videoId, required Key requesterKey}) async {
+  void getComments({
+    required int videoId,
+    required Key requesterKey,
+    String? videoUrl,
+  }) async {
     emit(CommentsLoading());
-    final comments = await getCommentThread(CommentParams(videoId: videoId));
+    final comments = await getCommentThread(
+        CommentParams(videoId: videoId, videoUrl: videoUrl));
 
     comments.fold(
       (failure) => emit(const CommentsError(message: 'There was an error')),
@@ -33,10 +38,11 @@ class CommentsCubit extends Cubit<CommentsState> {
   void getReplies(
       {required int videoId,
       required int threadId,
-      required Key requesterKey}) async {
+      required Key requesterKey,
+      String? videoUrl}) async {
     emit(CommentsLoading());
-    final comments = await getCommentReplies(
-        CommentParams(videoId: videoId, threadId: threadId));
+    final comments = await getCommentReplies(CommentParams(
+        videoId: videoId, threadId: threadId, videoUrl: videoUrl));
 
     comments.fold(
       (failure) => emit(const CommentsError(message: 'There was an error')),

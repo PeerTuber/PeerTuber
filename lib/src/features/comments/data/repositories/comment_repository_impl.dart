@@ -35,6 +35,24 @@ class CommentRepositoryImpl implements CommentRepository {
   }
 
   @override
+  Future<Either<Failure, List<CommentEntity>>> getCommentsByUrl({
+    required String videoUrl,
+    required int videoId,
+  }) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final remoteComments = await remoteDataSource.getCommentsByUrl(
+            videoUrl: videoUrl, videoId: videoId);
+        return Right(remoteComments.map((e) => e.toEntity()).toList());
+      } on ServerException {
+        return const Left(ServerFailure());
+      }
+    } else {
+      return Left(NetworkFailure());
+    }
+  }
+
+  @override
   Future<Either<Failure, List<CommentReplyEntity>>> getReplies({
     required int videoId,
     required int threadId,
@@ -43,6 +61,25 @@ class CommentRepositoryImpl implements CommentRepository {
       try {
         final remoteComments = await remoteDataSource.getReplies(
             videoId: videoId, threadId: threadId);
+        return Right(remoteComments.map((e) => e.toEntity()).toList());
+      } on ServerException {
+        return const Left(ServerFailure());
+      }
+    } else {
+      return Left(NetworkFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<CommentReplyEntity>>> getRepliesByUrl({
+    required String videoUrl,
+    required int videoId,
+    required int threadId,
+  }) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final remoteComments = await remoteDataSource.getRepliesByUrl(
+            videoUrl: videoUrl, videoId: videoId, threadId: threadId);
         return Right(remoteComments.map((e) => e.toEntity()).toList());
       } on ServerException {
         return const Left(ServerFailure());

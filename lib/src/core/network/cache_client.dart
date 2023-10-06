@@ -1,4 +1,4 @@
-//TODO(mikehuntington): improve cache client. Currently saving too much.
+// TODO(mikehuntington): improve cache client. Currently saving too much.
 class CacheClient {
   final _cache = <String, CacheEntry>{};
 

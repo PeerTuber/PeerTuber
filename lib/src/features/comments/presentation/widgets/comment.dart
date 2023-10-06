@@ -32,6 +32,7 @@ class CommentWidget extends StatelessWidget {
     final instance = context.read<InstanceCubit>().state.instance;
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
@@ -47,7 +48,7 @@ class CommentWidget extends StatelessWidget {
                 ),
                 child: AvatarWidget(
                   types: (
-                    account: comment.account,
+                    account: comment.account!,
                     channel: ChannelEntity.empty
                   ),
                   target: AvatarTarget.account,
@@ -59,7 +60,7 @@ class CommentWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5),
                 child: Text(
-                  comment.account.displayName,
+                  comment.account!.displayName,
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         color: Colors.grey,
                       ),
@@ -112,23 +113,20 @@ class CommentWidget extends StatelessWidget {
         ),
 
         const SizedBox(
-          height: 10,
+          height: 5,
         ),
 
         //!-- REPLY COUNT
         Visibility(
-          visible: comment.totalReplies > 0,
-          child: Visibility(
-            visible: !isInThread,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 6),
-              child: Text(
-                '${comment.totalReplies} replies',
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-              ),
+          visible: !isInThread && comment.totalReplies > 0,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 6),
+            child: Text(
+              '${comment.totalReplies} replies',
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
             ),
           ),
         ),

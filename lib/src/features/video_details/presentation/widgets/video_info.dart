@@ -52,11 +52,14 @@ class VideoInfo extends StatelessWidget {
           const Divider(),
           BlocBuilder<CommentsCubit, CommentsState>(
             buildWhen: (previous, current) {
-              if (current is CommentsLoaded) {
-                return current.replies != null && current.replies!.isEmpty;
+              if (context
+                  .read<SlideUpPanelCubit>()
+                  .panelController
+                  .isPanelClosed) {
+                return true;
+              } else {
+                return false;
               }
-
-              return false;
             },
             builder: (context, state) {
               if (state is CommentsLoaded && state.comments!.isNotEmpty) {

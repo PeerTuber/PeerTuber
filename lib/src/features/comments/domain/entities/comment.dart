@@ -14,7 +14,7 @@ class CommentEntity extends Equatable {
   final bool isDeleted;
   final int totalRepliesFromVideoAuthor;
   final int totalReplies;
-  final AccountEntity account;
+  final AccountEntity? account;
 
   const CommentEntity({
     required this.id,
@@ -29,7 +29,7 @@ class CommentEntity extends Equatable {
     required this.isDeleted,
     required this.totalRepliesFromVideoAuthor,
     required this.totalReplies,
-    required this.account,
+    this.account,
   });
 
   static const empty = CommentEntity(

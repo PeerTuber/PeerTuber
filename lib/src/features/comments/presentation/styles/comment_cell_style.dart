@@ -11,6 +11,7 @@ class CommentCellStyle extends ThemeExtension<CommentCellStyle> {
     required this.threadLineColor4,
     required this.threadLineColor5,
     required this.threadLineSpacing,
+    required this.cellTopBorder,
   });
 
   // Thread line colors
@@ -19,6 +20,8 @@ class CommentCellStyle extends ThemeExtension<CommentCellStyle> {
   final Color threadLineColor3;
   final Color threadLineColor4;
   final Color threadLineColor5;
+
+  final BorderSide cellTopBorder;
 
   // Thread line spacing
   final double threadLineSpacing;
@@ -31,6 +34,7 @@ class CommentCellStyle extends ThemeExtension<CommentCellStyle> {
     Color? threadLineColor4,
     Color? threadLineColor5,
     double? threadLineSpacing,
+    BorderSide? cellTopBorder,
   }) =>
       CommentCellStyle(
         threadLineColor1: threadLineColor1 ?? this.threadLineColor1,
@@ -39,6 +43,7 @@ class CommentCellStyle extends ThemeExtension<CommentCellStyle> {
         threadLineColor4: threadLineColor4 ?? this.threadLineColor4,
         threadLineColor5: threadLineColor5 ?? this.threadLineColor5,
         threadLineSpacing: threadLineSpacing ?? this.threadLineSpacing,
+        cellTopBorder: cellTopBorder ?? this.cellTopBorder,
       );
 
   @override
@@ -59,6 +64,7 @@ class CommentCellStyle extends ThemeExtension<CommentCellStyle> {
           Color.lerp(threadLineColor5, other.threadLineColor5, t)!,
       threadLineSpacing:
           lerpDouble(threadLineSpacing, other.threadLineSpacing, t)!,
+      cellTopBorder: BorderSide.lerp(cellTopBorder, other.cellTopBorder, t),
     );
   }
 }

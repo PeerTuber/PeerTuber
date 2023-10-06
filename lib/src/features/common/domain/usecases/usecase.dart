@@ -44,8 +44,9 @@ class VideoParams extends Params {
 class CommentParams extends Params {
   final int videoId;
   final int? threadId;
+  final String? videoUrl;
 
-  CommentParams({required this.videoId, this.threadId});
+  CommentParams({required this.videoId, this.threadId, this.videoUrl});
 
   @override
   List<dynamic> get props => [videoId];

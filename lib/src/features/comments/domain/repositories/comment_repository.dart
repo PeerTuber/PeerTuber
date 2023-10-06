@@ -7,7 +7,16 @@ abstract class CommentRepository {
   Future<Either<Failure, List<CommentEntity>>> getComments({
     required int videoId,
   });
+  Future<Either<Failure, List<CommentEntity>>> getCommentsByUrl({
+    required String videoUrl,
+    required int videoId,
+  });
   Future<Either<Failure, List<CommentReplyEntity>>> getReplies({
+    required int videoId,
+    required int threadId,
+  });
+  Future<Either<Failure, List<CommentReplyEntity>>> getRepliesByUrl({
+    required String videoUrl,
     required int videoId,
     required int threadId,
   });

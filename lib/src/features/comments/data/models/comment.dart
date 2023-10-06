@@ -2,7 +2,6 @@
 //
 //     final comment = commentFromJson(jsonString);
 // Generated with https://app.quicktype.io/
-
 import 'package:json_annotation/json_annotation.dart';
 import 'package:peertuber/src/features/comments/domain/entities/comment.dart';
 import 'package:peertuber/src/features/common/data/models/models.dart';
@@ -23,7 +22,7 @@ class CommentModel {
   final bool isDeleted;
   final int totalRepliesFromVideoAuthor;
   final int totalReplies;
-  final AccountModel account;
+  final AccountModel? account;
 
   const CommentModel({
     required this.id,
@@ -38,7 +37,7 @@ class CommentModel {
     required this.isDeleted,
     required this.totalRepliesFromVideoAuthor,
     required this.totalReplies,
-    required this.account,
+    this.account,
   });
 
   static const empty = CommentModel(
@@ -105,7 +104,7 @@ class CommentModel {
       isDeleted: isDeleted,
       totalRepliesFromVideoAuthor: totalRepliesFromVideoAuthor,
       totalReplies: totalReplies,
-      account: account.toEntity(),
+      account: account?.toEntity(),
     );
   }
 
@@ -123,7 +122,9 @@ class CommentModel {
       isDeleted: entity.isDeleted,
       totalRepliesFromVideoAuthor: entity.totalRepliesFromVideoAuthor,
       totalReplies: entity.totalReplies,
-      account: AccountModel.fromEntity(entity.account),
+      account: entity.account != null
+          ? AccountModel.fromEntity(entity.account!)
+          : null,
     );
   }
 

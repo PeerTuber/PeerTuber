@@ -10,8 +10,8 @@ AccountModel _$AccountModelFromJson(Map<String, dynamic> json) => AccountModel(
       url: json['url'] as String,
       name: json['name'] as String,
       host: json['host'] as String,
-      avatars: (json['avatars'] as List<dynamic>)
-          .map((e) => AvatarModel.fromJson(e as Map<String, dynamic>))
+      avatars: (json['avatars'] as List<dynamic>?)
+          ?.map((e) => AvatarModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       avatar: json['avatar'] == null
           ? null
@@ -23,7 +23,7 @@ AccountModel _$AccountModelFromJson(Map<String, dynamic> json) => AccountModel(
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
-      banners: json['banners'] as List<dynamic>?,
+      banners: json['banners'],
       displayName: json['displayName'] as String,
       description: json['description'] as String?,
       updatedAt: json['updatedAt'] == null
