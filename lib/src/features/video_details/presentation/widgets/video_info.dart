@@ -62,7 +62,9 @@ class VideoInfo extends StatelessWidget {
               }
             },
             builder: (context, state) {
-              if (state is CommentsLoaded && state.comments!.isNotEmpty) {
+              if (state is CommentsLoaded &&
+                  state.comments != null &&
+                  state.comments!.isNotEmpty) {
                 return CommentsPreview(
                   onTap: () {
                     context.read<SlideUpPanelCubit>().openPanel();

@@ -130,19 +130,6 @@ class CommentWidget extends StatelessWidget {
             ),
           ),
         ),
-
-        //!-- CHILDREN REPLY LIST VIEW
-        Visibility(
-          visible: data != null &&
-              data!.replies != null &&
-              data!.replies!.isNotEmpty,
-          child: CommentsList(
-            isThread: isInThread,
-            parentIsReply: true,
-            depth: depth + 1,
-            data: (comments: null, replies: data!.replies),
-          ),
-        ),
       ],
     );
   }

@@ -162,6 +162,7 @@ class CommentCell extends StatelessWidget {
                     ),
                   )),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       //!-- HTML RENDERER (COMMENT TEXT)
                       Html(
