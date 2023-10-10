@@ -115,6 +115,7 @@ class CommentsScreen extends HookWidget {
                         contentId: contentId,
                         data: (
                           comments: (state as CommentsLoaded).comments,
+                          // ignore: unnecessary_cast
                           replies: (state as CommentsLoaded).replies
                         ),
                       ),
