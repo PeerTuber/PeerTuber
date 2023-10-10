@@ -16,7 +16,7 @@ class GetVideoDetailsUseCase
   Future<Either<Failure, VideoEntity>> call(VideoParams params) async {
     if (params.video.isLocal == null) {
       return await repository.getVideoDetailsByUrl(
-          params.video.url, params.video.uuid!);
+          params.video.url!, params.video.uuid!);
     } else {
       return await repository.getVideoDetailsById(params.video.id);
     }

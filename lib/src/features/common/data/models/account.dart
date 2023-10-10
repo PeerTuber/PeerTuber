@@ -1,19 +1,23 @@
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:peertuber/src/features/common/data/models/models.dart';
 import 'package:peertuber/src/features/common/domain/entities/entities.dart';
 
+part 'account.g.dart';
+
+@JsonSerializable()
 class AccountModel extends Equatable {
   final String url;
   final String name;
   final String host;
-  final List<AvatarModel> avatars;
+  final List<AvatarModel>? avatars;
   final AvatarModel? avatar;
   final int id;
   final bool? hostRedundancyAllowed;
   final int? followingCount;
   final int? followersCount;
   final DateTime? createdAt;
-  final List<dynamic>? banners;
+  final dynamic banners;
   final String displayName;
   final String? description;
   final DateTime? updatedAt;
@@ -23,8 +27,8 @@ class AccountModel extends Equatable {
     required this.url,
     required this.name,
     required this.host,
-    required this.avatars,
-    required this.avatar,
+    this.avatars,
+    this.avatar,
     required this.id,
     this.hostRedundancyAllowed,
     this.followingCount = 0,
@@ -72,9 +76,6 @@ class AccountModel extends Equatable {
         url: entity.url,
         name: entity.name,
         host: entity.host,
-        avatars: entity.avatars
-            .map((avatar) => AvatarModel.fromEntity(avatar))
-            .toList(),
         avatar: AvatarModel.fromEntity(entity.avatar!),
         id: entity.id,
         hostRedundancyAllowed: entity.hostRedundancyAllowed,
@@ -98,30 +99,7 @@ class AccountModel extends Equatable {
     displayName: '',
   );
 
-  factory AccountModel.fromJson(Map<String, dynamic> json) => AccountModel(
-        url: json["url"],
-        name: json["name"],
-        host: json["host"],
-        avatars: List<AvatarModel>.from(
-            json["avatars"].map((x) => AvatarModel.fromJson(x))),
-        avatar: json["avatar"] != null
-            ? AvatarModel.fromJson(json["avatar"])
-            : null,
-        id: json["id"],
-        hostRedundancyAllowed: json["hostRedundancyAllowed"] ?? false,
-        followingCount: json["followingCount"] ?? 0,
-        followersCount: json["followersCount"] ?? 0,
-        createdAt: json["createdAt"] == null
-            ? null
-            : DateTime.parse(json["createdAt"]),
-        banners: json["banners"] == null
-            ? null
-            : List<dynamic>.from(json["banners"].map((x) => x)),
-        displayName: json["displayName"],
-        description: json["description"] ?? '',
-        updatedAt: json["updatedAt"] == null
-            ? null
-            : DateTime.parse(json["updatedAt"]),
-        userId: json["userId"],
-      );
+  factory AccountModel.fromJson(Map<String, dynamic> json) =>
+      _$AccountModelFromJson(json);
+  Map<String, dynamic> toJson() => _$AccountModelToJson(this);
 }

@@ -5,6 +5,7 @@ import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
 import 'package:miniplayer/miniplayer.dart';
 import 'package:peertuber/src/core/network/cache_client.dart';
+import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 import 'injection.config.dart';
 import 'package:http/http.dart' as http;
 
@@ -37,6 +38,9 @@ abstract class RegisterModule {
 
   @singleton
   MiniplayerController get miniPlayerController;
+
+  @singleton
+  PanelController get panelController;
 
   @lazySingleton
   InternetConnection get internetConnection;

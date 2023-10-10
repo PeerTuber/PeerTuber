@@ -44,7 +44,11 @@ class UpdatePostion extends MediaPlayerEvent {
   List<Object> get props => [position];
 }
 
-class StopMedia extends MediaPlayerEvent {}
+class StopMedia extends MediaPlayerEvent {
+  final bool? closePlayer;
+
+  const StopMedia({this.closePlayer});
+}
 
 class EndMedia extends MediaPlayerEvent {
   final VideoEntity video;

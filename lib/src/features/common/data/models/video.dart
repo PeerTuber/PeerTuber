@@ -25,7 +25,7 @@ class VideoModel extends Equatable {
   final int id;
   final String? uuid;
   final String? shortUuid;
-  final String url;
+  final String? url;
   final String? remoteHost;
   final String name;
   final CategoryModel category;
@@ -69,7 +69,7 @@ class VideoModel extends Equatable {
     required this.id,
     required this.uuid,
     required this.shortUuid,
-    required this.url,
+    this.url,
     this.remoteHost,
     required this.name,
     required this.category,
@@ -441,7 +441,7 @@ class StreamingPlaylistModel extends Equatable {
 }
 
 class FileElementModel extends Equatable {
-  final int id;
+  final int? id;
   final CategoryModel resolution;
   final String magnetUri;
   final int size;

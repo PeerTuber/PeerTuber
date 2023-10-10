@@ -1,5 +1,9 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:peertuber/src/features/common/domain/entities/entities.dart';
 
+part 'avatar.g.dart';
+
+@JsonSerializable()
 class AvatarModel extends AvatarEntity {
   const AvatarModel(
       {super.width,
@@ -28,19 +32,8 @@ class AvatarModel extends AvatarEntity {
     );
   }
 
-  factory AvatarModel.fromJson(Map<String, dynamic> json) => AvatarModel(
-        width: json["width"],
-        path: json["path"],
-        url: json["url"],
-        createdAt: DateTime.parse(json["createdAt"]),
-        updatedAt: DateTime.parse(json["updatedAt"]),
-      );
+  factory AvatarModel.fromJson(Map<String, dynamic> json) =>
+      _$AvatarModelFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        "width": width,
-        "path": path,
-        "url": url,
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
-      };
+  Map<String, dynamic> toJson() => _$AvatarModelToJson(this);
 }

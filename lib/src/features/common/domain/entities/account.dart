@@ -5,14 +5,14 @@ class AccountEntity extends Equatable {
   final String url;
   final String name;
   final String host;
-  final List<AvatarEntity> avatars;
+  final List<AvatarEntity>? avatars;
   final AvatarEntity? avatar;
   final int id;
   final bool? hostRedundancyAllowed;
   final int? followingCount;
   final int? followersCount;
   final DateTime? createdAt;
-  final List<dynamic>? banners;
+  final dynamic banners;
   final String displayName;
   final String? description;
   final DateTime? updatedAt;
@@ -22,7 +22,7 @@ class AccountEntity extends Equatable {
     required this.url,
     required this.name,
     required this.host,
-    required this.avatars,
+    this.avatars,
     required this.avatar,
     required this.id,
     this.hostRedundancyAllowed,

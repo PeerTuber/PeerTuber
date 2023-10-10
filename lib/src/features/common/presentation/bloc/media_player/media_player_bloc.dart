@@ -69,6 +69,7 @@ class MediaPlayerBloc extends Bloc<MediaPlayerEvent, MediaPlayerState> {
         controller.player.play();
         return;
       } else {
+        add(const StopMedia());
         add(MaximizePlayer());
       }
     }
@@ -138,7 +139,9 @@ class MediaPlayerBloc extends Bloc<MediaPlayerEvent, MediaPlayerState> {
       controller.player.stop();
     }
 
-    emit(MediaPlayerNotLoaded());
+    if (event.closePlayer != null && event.closePlayer!) {
+      emit(MediaPlayerNotLoaded());
+    }
   }
 
   void _onEndMedia(EndMedia event, Emitter<MediaPlayerState> emit) {

@@ -29,12 +29,20 @@ class VideoPlayer extends StatelessWidget {
                       Orientation.portrait),
                   child: SizedBox(
                     width: max(
-                        MediaQuery.of(context).size.width *
-                            miniPlayerPercentage,
-                        100),
+                        min(
+                            MediaQuery.of(context).size.width,
+                            (MediaQuery.of(context).size.width *
+                                    miniPlayerPercentage *
+                                    3) +
+                                106),
+                        106),
                     height: max(
-                        (MediaQuery.of(context).size.width * 9.0 / 16.0) *
-                            miniPlayerPercentage,
+                        min(
+                            (MediaQuery.of(context).size.width * 9.0 / 16.0),
+                            ((MediaQuery.of(context).size.width * 9.0 / 16.0) *
+                                    miniPlayerPercentage *
+                                    1.5) +
+                                60),
                         60),
 
                     // -- Video widget to display video output.
@@ -52,8 +60,9 @@ class VideoPlayer extends StatelessWidget {
                         Expanded(child: _MiniPlayerVideoInfo(video: video)),
                         const MiniPlayerControls(),
                         IconButton(
-                          onPressed: () =>
-                              context.read<MediaPlayerBloc>().add(StopMedia()),
+                          onPressed: () => context
+                              .read<MediaPlayerBloc>()
+                              .add(const StopMedia(closePlayer: true)),
                           iconSize: 30.0,
                           icon: const Icon(Icons.close),
                         ),
@@ -178,9 +187,9 @@ class _VideoWidget extends StatelessWidget {
             controls: (miniPlayerPercentage == 1)
                 ? MaterialVideoControls
                 : NoVideoControls,
-            fill: Colors.black,
+            fill: Theme.of(context).colorScheme.background,
             alignment: Alignment.topCenter,
-            fit: BoxFit.fitHeight);
+            fit: BoxFit.contain);
       },
     );
   }

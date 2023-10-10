@@ -5,7 +5,7 @@ class VideoEntity extends Equatable {
   final int id;
   final String? uuid;
   final String? shortUuid;
-  final String url;
+  final String? url;
   final String? remoteHost;
   final String name;
   final CategoryEntity category;
@@ -49,7 +49,7 @@ class VideoEntity extends Equatable {
     required this.id,
     required this.uuid,
     required this.shortUuid,
-    required this.url,
+    this.url,
     required this.remoteHost,
     required this.name,
     required this.category,
@@ -191,7 +191,7 @@ class StreamingPlaylistEntity extends Equatable {
 }
 
 class FileElementEntity extends Equatable {
-  final int id;
+  final int? id;
   final CategoryEntity resolution;
   final String magnetUri;
   final int size;

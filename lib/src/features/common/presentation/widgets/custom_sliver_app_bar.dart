@@ -8,12 +8,13 @@ class CustomSliverAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverAppBar(
       floating: true,
-      backgroundColor: Colors.black,
       leading: Padding(
         padding: const EdgeInsets.only(left: 8.0, top: 8.0, bottom: 8.0),
         child: Image.asset('assets/images/peertube.png'),
       ),
       title: const Text('PeerTuber'),
+      centerTitle: false,
+      titleSpacing: 0,
       actions: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,

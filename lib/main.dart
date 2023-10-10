@@ -46,7 +46,8 @@ class MyApp extends StatelessWidget {
           return MaterialApp.router(
             title: 'PeerTuber',
             debugShowCheckedModeBanner: false,
-            theme: CustomTheme().theme(),
+            theme: CustomTheme().light(),
+            darkTheme: CustomTheme().dark(),
             routerConfig: AppRouter(context.read<AuthBloc>()).router,
           );
         }));
